@@ -1,14 +1,14 @@
 # About
 
-This document is created to guide the users of CodeÉcrivain on how to navigate and what features it provides.
+This document is created to guide the users of [CodeÉcrivain](https://ushinar-career.github.io/CodeEcrivain/) on how to navigate and what features it provides.
 
 ---
 
 # Overview
 
-[CodeÉcrivain]() is a curated space to introduce myself and my work.
+ **CodeÉcrivain** is a curated space to introduce myself and my work.
 
-![screen-shot of landing page]()
+<!-- ![screen-shot of landing page]() -->
 
 **App Structure:**
 
@@ -25,6 +25,7 @@ This document is created to guide the users of CodeÉcrivain on how to navigate 
 │   │   ├── clouds_lq.jpg
 │   │   ├── earth_logo_hq.png
 │   │   ├── earth_logo_lq.png
+│   │   ├── favicon.png
 │   │   ├── profile_picture_hq.png
 │   │   ├── profile_picture_lq.png
 │   │   └── stars_lq.jpg
@@ -60,7 +61,10 @@ This document is created to guide the users of CodeÉcrivain on how to navigate 
 
 # Features
 
-Designed as a SPA this application comprises of common and dynamic sections. Site loading logic is initiated by function: `initAppLoader()` in [spa.js](./static/js/spa.js#L4) which displays a global loader till the full app is rendered to preserve initial animations.
+Designed as a SPA, **CodeÉcrivain** comprises of common and dynamic sections. 
+
+## Site Loading
+Site loading logic is initiated by function: `initAppLoader()` in [spa.js](./static/js/spa.js#L4) which displays a global loader till the full app is rendered to preserve initial animations.
 
 ## Living Cursor
 Cursor is disabled by default and replaced with an animated SVG cursor. On hovering above clickable options the cursor pointer appears else only custom animated cursor is displayed.
