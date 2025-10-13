@@ -1,0 +1,65 @@
+/* Section Sidebar Styling */
+.section-layout {
+  display: flex;
+  height: 100%;
+  gap: 1rem;
+}
+.section-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-right: var(--border);
+  width: 3rem;
+  transition: width var(--animation-fast) ease;
+  overflow: hidden;
+}
+.section-sidebar:hover {
+  border-right: var(--border-hover);
+}
+.section-sidebar.expanded {
+  width: 7rem;
+  animation: fadeIn var(--animation-slow) ease forwards; 
+  overflow: hidden;
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  border: var(--border-transparent);
+}
+.sidebar-icon.active {
+  color: var(--hover-color);
+  border-bottom: var(--border-hover) !important;
+  animation: fadeIn var(--animation-slow) ease forwards;
+  border-radius: 0 !important;
+}
+.sidebar-icon:hover{
+  border: var(--border-transparent);
+}
+.sidebar-label {
+  opacity: 0.3;
+  transition: opacity var(--animation-slow) ease;
+  border: var(--border-transparent);
+}
+.section-sidebar.expanded .sidebar-label {
+  opacity: 1;
+}
+.sidebar-item:hover .sidebar-label {
+  cursor: pointer;
+  color: var(--hover-color);
+  border-bottom: var(--border-hover);  
+  animation: fadeIn var(--animation-fast) ease forwards;
+}
+
+/* ------------------------------------------- */
+/* Small screen styles - breaking point: 354px*/
+@media screen and (max-width: 600px) {
+  .sidebar-label {
+    display: none;
+  }
+  .section-sidebar,
+  .section-sidebar.expanded {
+    width: 2rem;
+  }
+}

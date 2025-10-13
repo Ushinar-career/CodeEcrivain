@@ -1,0 +1,135 @@
+<!-- Verification Landing Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enter Access Code</title>
+  <link rel="icon" type="image/png" href="assets/images/earth_logo.png"/>
+  <link rel="stylesheet" href="static/css/spa.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      border-radius: 0.5rem;
+      color: #5dade2;
+      font-family: 'Gill Sans', 'Segoe UI', sans-serif;
+      margin: 1rem;
+      padding: 1rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(2rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    body {
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .otp-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .otp-input {
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
+      border: 0.1rem solid #5dade2;
+      background-color: black;
+      color: #5dade2;
+    }
+
+    .error-popup {
+      display: none;
+      position: absolute;
+      align-self: center;
+      padding: 3rem;
+      background-color: black;
+      color: red;
+      border-radius: 0.5rem;
+      border: 0.1rem solid #5dade2;
+      opacity: 0;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter Access Code</h1>
+  <div class="otp-container">
+    <input type="password" maxlength="1" class="otp-input" />
+    <input type="password" maxlength="1" class="otp-input" />
+    <input type="password" maxlength="1" class="otp-input" />
+    <input type="password" maxlength="1" class="otp-input" />
+    <input type="password" maxlength="1" class="otp-input" />
+    <input type="password" maxlength="1" class="otp-input" />
+  </div>
+
+  <div class="error-popup">❌ Invalid code!</div>
+
+  <script>
+    const validCode = "000000";
+
+    function showErrorPopup() {
+      const popup = document.querySelector(".error-popup");
+      popup.style.display = "block";
+      popup.style.opacity = "1";
+
+      const inputs = document.querySelectorAll(".otp-input");
+      inputs.forEach(input => input.value = "");
+      inputs[0].focus();
+
+      setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => {
+          popup.style.display = "none";
+        }, 300);
+      }, 2000);
+    }
+
+    function verifyCode() {
+      const inputs = document.querySelectorAll(".otp-input");
+      let enteredCode = "";
+      inputs.forEach(input => enteredCode += input.value);
+
+      if (enteredCode.length === inputs.length) {
+        if (enteredCode === validCode) {
+          window.location.href = "spa.html";
+        } else {
+          showErrorPopup();
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const inputs = document.querySelectorAll(".otp-input");
+      inputs[0].focus();
+
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", () => {
+          if (input.value && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+
+          // Trigger auto-submit only when all inputs are filled
+          const allFilled = Array.from(inputs).every(inp => inp.value);
+          if (allFilled) {
+            verifyCode();
+          }
+        });
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && !input.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

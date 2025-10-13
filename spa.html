@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      CodeÉcrivain
+    </title>
+    <!-- Preload Low Quality Assets -->
+    <link rel="preload" as="image" href="assets/images/stars_lq.jpg" />
+    <link rel="preload" as="image" href="assets/images/clouds_lq.jpg" />
+    <link rel="preload" as="image" href="assets/images/profile_picture_lq.png" />
+    <link rel="preload" as="image" href="assets/images/earth_logo_lq.png" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="static/css/spa.css" />
+  </head>
+  <body>
+    <!-- Global Cursor -->
+    <div class="global-cursor">
+    </div>
+    <!-- App Loading Screen -->
+    <div class="global-loader">
+      <div class="spinner">
+      </div>
+    </div>
+    <!-- Whole Intial App (SPA) -->
+    <div class="app-container">
+      <!-- Top Ribbon -->
+      <header class="top-ribbon">
+        <video class="video dark-video" poster="assets/images/stars_lq.jpg"
+      muted loop autoplay playsinline disablePictureInPicture preload="none">
+          <source src="assets/videos/stars_hq.mp4" type="video/mp4" />
+        </video>
+        <video class="video light-video hidden" poster="assets/images/clouds_lq.jpg"
+      muted loop autoplay playsinline disablePictureInPicture preload="none">
+        </video>
+        <div class="ribbon-controls">
+          <div class="toggle-container">
+            <span class="material-icons mode-icon" title="Dark Mode Active">
+              dark_mode
+            </span>
+            <label class="switch" title="Toggle Theme">
+              <input type="checkbox" class="mode-toggle hidden" aria-label="Toggle dark/light theme"/>
+              <span class="slider">
+              </span>
+            </label>
+          </div>
+          <div class="audio-container">
+            <audio class="bg-audio" data-src="assets/audio/background-music.mp3">
+            </audio>
+            <span class="play-btn material-icons" title="Play audio in background" aria-label="Play audio">
+              volume_up
+            </span>
+            <span class="pause-btn material-icons" title="Pause audio" aria-label="Pause audio">
+              volume_off
+            </span>
+          </div>
+        </div>
+      </header>
+      <!-- Generic Pop-up -->
+      <div class="generic-popup hidden">
+        <div class="popup-content">
+        </div>
+        <span class="material-icons close-icon">
+          close
+        </span>
+      </div>
+      <!-- Profile Section -->
+      <section class="profile-container">
+        <img class="profile-photo" title="Click to view photo" src="assets/images/profile_picture_lq.png" alt="">
+        <div class="info-container">
+          <h1 class="section-title name" title="Name">
+            Ushinar Chatterjee
+          </h1>
+          <h2 class="section-text-md role" title="Role">
+            Lead Technical Writer
+          </h2>
+          <div class="exp-container">
+            <p class="section-text-md exp" title="Experience">
+              9+ years
+            </p>
+            <a class="material-icons download-icon" href="files/abc.pdf" target="_blank" title="Download Resume">
+              download_for_offline
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- Navigation Bar -->
+      <nav class="nav-bar">
+        <span class="nav-links">
+          <a class="nav-link section-home active">
+            Home
+          </a>
+          <a class="nav-link section-about">
+            About
+          </a>
+          <a class="nav-link section-projects">
+            Projects
+          </a>
+          <a class="nav-link section-contact">
+            Contact
+          </a>
+        </span>
+      </nav>
+      <!-- Main content wrapper for different sections -->
+      <main class="content-wrapper">
+        <!-- Background Logo -->
+        <img class="logo" src="assets/images/earth_logo_lq.png" alt="Logo">
+        <!-- Loader animation -->
+        <div class="section-loader hidden">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <section class="content-section section-home active">
+        </section>
+        <section class="content-section section-about">
+        </section>
+        <section class="content-section section-projects">
+        </section>
+        <section class="content-section section-contact">
+        </section>
+        <!-- Chat Icon -->
+        <span class="material-icons chat-icon" title="Chatbot">
+          chat
+        </span>
+      </main>
+      <!-- Footer Section -->
+      <footer class="subtext">
+        ©2025. All rights reserved.
+      </footer>
+      <!-- JavaScript files for interactivity -->
+      <script src="static/js/spa.js">
+      </script>
+      <script src="static/js/utils.js">
+      </script>
+    </div>
+  </body>
+</html>

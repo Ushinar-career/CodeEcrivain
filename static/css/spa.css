@@ -1,0 +1,520 @@
+:root{
+  /* Basic Styling */
+  --background-color: #111;
+  --background-transparent: #111111CC;
+  --primary-color: #5fbff8;
+  --hover-color: wheat;
+  --border: 0.9px solid var(--primary-color);
+  --border-hover: 0.9px solid var(--hover-color);
+  --border-transparent: 0.01rem solid transparent;
+  --radius-circle: 50%;
+  --radius-rounded: 0.5rem;
+
+  /* Perfect fourth typographic scale */
+  --font-size-sm: 0.75rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.33rem;
+  --font-size-lg: 1.77rem;
+
+  /* Animation durations */
+  --animation-slow: 3s;
+  --animation-fast: 1s;
+}
+
+/* Animation Functions */
+@keyframes fadeIn {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeInRight {
+  from {
+    opacity: 0.3;
+    transform: translateX(9rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0.3;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes glowDimmed {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.05;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+@keyframes rotate {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}
+@keyframes bounce {
+  to {
+    transform: translateY(-1rem) scale(1.2);
+    background-color: var(--primary-color);
+  }
+}
+@keyframes colorswap {
+  0% { color: var(--hover-color) }
+  100% { color: var(--primary-color) }
+}
+
+/* General Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+  cursor: none;
+}
+html {
+  /* Set font size to scale whole app uniformly */
+ font-size: 16px; /*default 16px */
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  color: var(--primary-color);
+  background: var(--background-color);
+  font-family: 'Trebuchet MS';
+  line-height: 1.5;
+}
+.hidden {
+  display: none !important;
+}
+.dimmed {
+  opacity: 0.5;
+  transition: var(--animation-fast);
+  cursor: not-allowed !important;
+}
+.light-theme {
+  --background-color: wheat;
+  --background-transparent: rgba(245, 222, 179, 0.8);
+  --primary-color: #004466;
+  --hover-color: #111;
+  --border: 1px solid var(--primary-color);
+  --border-hover: 1px solid var(--hover-color);
+  --border-transparent: 0.01rem solid transparent;
+}
+.material-icons {
+  font-size: var(--font-size-md);
+  font-family: 'Material Icons';
+  color: var(--hover-color);
+  background: none;
+  border: var(--border-transparent);
+  border-radius: var(--radius-circle);
+  cursor: pointer;
+}
+.material-icons:hover {
+  transform: scale(1.2);
+}
+::-webkit-scrollbar {
+  height: 0.1rem;
+  width: 0.1rem;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--hover-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Font Styling */
+@font-face {
+  font-family: 'Material Icons';
+  src: url('../../assets/fonts/fonts_local.woff2') format('woff2');
+  font-display: swap;
+}
+ul {
+  padding-left: 2rem;
+  line-height: 1.5rem;
+}
+.section-title {
+  font-size: var(--font-size-lg);
+}
+.section-text-md {
+  font-size: var(--font-size-md);
+  margin-bottom: 1rem;
+}
+.section-text-base {
+  font-size: var(--font-size-base);
+}
+.subtext {
+  font-size: var(--font-size-sm) ;
+}
+
+/* Loading Screen Styling */
+.global-loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
+  z-index: 10; /* high enough to sit above all other elements */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner {
+  width: 5rem;
+  height: 5rem;
+  border-radius: var(--radius-circle);
+  box-shadow: 0 0.3rem 0 var(--primary-color) inset;
+  animation: rotate var(--animation-slow) linear infinite;
+}
+
+/* Pop-up Container Styling */
+.generic-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-transparent);
+  animation: fadeIn var(--animation-fast) ease forwards;
+  z-index: 10 !important;
+}
+.popup-content {
+  max-width: 80%;
+  max-height: 80%;
+  position: relative;
+  border: var(--border);
+  border-radius: var(--radius-rounded);
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.popup-content:hover {
+  border: var(--border-hover);
+}
+.popup-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+.popup-message {
+  text-align: center;
+  padding: 5rem;
+}
+.close-icon {
+  border: var(--border);
+  border-radius: 0.9rem;
+  background-color: var(--background-color);
+  padding: 0.5rem;
+  margin-top: -1.5rem;
+  z-index: 11 !important;
+}
+.close-icon:hover {
+  transform: none;
+  border: var(--border-hover);
+}
+
+/* Top Ribbon */
+.top-ribbon {
+  position: relative;
+  height: 6rem;
+}
+.video {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+  border-bottom: var(--border);
+  animation: fadeIn var(--animation-slow) ease forwards;
+}
+.top-ribbon:hover .video {
+  border-bottom: var(--border-hover);
+}
+.ribbon-controls {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem;
+  animation: fadeInDown var(--animation-slow) ease forwards;
+}
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 2.1rem;
+  height: 1rem;
+  border: var(--border-hover);
+  border-radius: var(--radius-rounded);
+}
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--radius-rounded);
+  cursor: pointer;
+}
+.slider:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 0.9rem;
+  width: 0.9rem;
+  background: var(--hover-color);
+  border-radius: 50%;
+  transition: var(--animation-fast);
+}
+.mode-toggle:checked + .slider:before {
+  transform: translate(1.1rem, -50%);
+}
+
+/* Profile Section */
+.profile-container { 
+  position: relative;
+  display: flex;
+  height: auto;
+  padding-left: 1.5rem;
+  align-items: center;
+}
+.profile-photo {
+  height: 9rem;
+  width: 9rem;
+  margin: -1rem 0;
+  border-radius: var(--radius-circle);
+  border: var(--border);
+  background: var(--background-color);
+  animation: fadeInDown var(--animation-slow) ease forwards;
+  cursor: pointer;
+}
+.profile-photo:hover {
+  border: var(--border-hover);
+}
+.info-container {
+  display: flex;
+  flex-direction: column;  
+  padding-left: 1.5rem;
+  white-space: nowrap;
+  animation: fadeInRight var(--animation-slow) ease forwards;
+}
+.exp-container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 0.5rem;
+}
+.name,
+.role,
+.exp {
+  margin-bottom: 0 !important;
+}
+.name:hover,
+.role:hover,
+.exp:hover {
+  color: var(--hover-color);
+  transition: color var(--animation-fast);
+}
+.download-icon,
+.download-icon:hover
+ {
+  text-decoration: none;
+  border: none;
+}
+
+/* Nav-Bar Styling */
+.nav-bar {
+  border-top: var(--border);
+  width: 100%;
+}
+.nav-bar:hover {
+  border-top: var(--border-hover);
+}
+.nav-links {
+  display: flex;
+  padding-left: 9rem;
+  gap: 1rem;
+  border: var(--border-transparent);
+  animation: fadeInRight var(--animation-slow) ease forwards;
+}
+.nav-link.active {
+  border-bottom: var(--border-hover);
+  color: var(--hover-color);  
+}
+.nav-link:hover {
+  border-bottom: var(--border-hover);
+  color: var(--hover-color);  
+  animation: fadeIn var(--animation-slow) ease forwards;
+  cursor: pointer;
+}
+
+/* Section Loader Styling */
+.section-loader {
+  /* border: var(--border); */
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  display: flex;
+  gap: 0.5rem;
+}
+.section-loader div {
+  width: var(--font-size-sm);
+  height: var(--font-size-sm);
+  background: var(--hover-color);
+  border-radius: 50%;
+  animation: bounce 0.6s infinite alternate;
+}
+.section-loader div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.section-loader div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Content Sections Styling */
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 90%;
+  max-width: 90%;
+  background-color: none !important;
+  animation: glowDimmed var(--animation-slow) ease-in-out infinite;
+  pointer-events: none;
+}
+.content-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100dvh - 1rem - 15rem);
+  margin-top: 0.3rem;
+  border: var(--border);
+  border-radius: var(--radius-rounded);
+  overflow: hidden;
+}
+.content-wrapper:hover {
+  border: var(--border-hover);
+}
+.content-section {
+  display: none;
+}
+.content-section.active {  
+  display: block;
+  height: 100%;
+  padding: 1rem;
+  overflow: auto;
+  animation: fadeInRight var(--animation-slow) ease forwards;
+}
+.section-content {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.section-content.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Chatbot icon styling */
+.chat-icon{
+  position: absolute;
+  background: none;
+  margin: 1rem;
+  right: 0;
+  bottom: 0;
+  font-size: calc(var(--font-size-lg) + 1rem) !important;
+  border-radius: var(--radius-rounded);
+  animation: fadeInRight var(--animation-slow) ease;
+}
+
+/* Footer Styling */
+footer {
+  width: 100%;
+  text-align: center;
+}
+
+
+
+
+
+/* ------------------------------------------- */
+/* Responsive styles - 3px increase every 300px*/
+@media screen and (min-width: 0px) {
+  html {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 300px) {
+  html {
+    font-size: 11px;
+  }
+}
+@media screen and (min-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 900px) {
+  html {
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 1500px) {
+  html {
+    font-size: 21px;
+  }
+}
+@media screen and (min-width: 1800px) {
+  html {
+    font-size: 24px;
+  }
+}
+@media screen and (min-width: 2100px) {
+  html {
+    font-size: 27px;
+  }
+}
+@media screen and (min-width: 2400px) {
+  html {
+    font-size: 30px;
+  }
+}
