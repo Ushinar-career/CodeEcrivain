@@ -442,7 +442,6 @@ ul {
   pointer-events: none;
   transition: opacity 1s ease, transform 1s ease;
 }
-
 .section-content.active {
   opacity: 1;
   transform: translateY(0);
@@ -472,49 +471,44 @@ footer {
 
 
 /* ------------------------------------------- */
-/* Responsive styles - 3px increase every 300px*/
+/* Responsive styles - 1px increase every 300px */
 @media screen and (min-width: 0px) {
   html {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 300px) {
   html {
     font-size: 12px;
   }
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 600px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media screen and (min-width: 900px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 1200px) {
   html {
     font-size: 15px;
   }
 }
 @media screen and (min-width: 1500px) {
   html {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 1800px) {
+  html {
+    font-size: 17px;
+  }
+}
+@media screen and (min-width: 2100px) {
+  html {
     font-size: 18px;
-  }
-}
-@media screen and (min-width: 2000px) {
-  html {
-    font-size: 21px;
-  }
-}
-@media screen and (min-width: 2500px) {
-  html {
-    font-size: 24px;
-  }
-}
-@media screen and (min-width: 3000px) {
-  html {
-    font-size: 27px;
-  }
-}
-@media screen and (min-width: 3500px) {
-  html {
-    font-size: 30px;
-  }
-}
-@media screen and (min-width: 4000px) {
-  html {
-    font-size: 33px;
   }
 }
