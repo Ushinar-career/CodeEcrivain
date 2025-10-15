@@ -217,3 +217,54 @@
 
 initLivingCursor();
 
+// ==============================
+// Height Guard Logic
+// ==============================
+
+function initHeightGuard(container, options = {}) {
+  const threshold = options.threshold || 400;
+  const message = options.message || 
+    "❌ Error: Window height is too small to display all sections properly! Please rotate your device or maximize vertically.";
+
+  // Create notification element if not already present
+  let notice = document.querySelector(".height-notice");
+  if (!notice) {
+    notice = document.createElement("div");
+    notice.className = "height-notice";
+    notice.textContent = message;
+    document.body.appendChild(notice);
+
+    // Inject styles dynamically
+    const style = document.createElement("style");
+    style.textContent = `
+      .height-notice {
+        display: none;
+        position: fixed;
+        bottom: 1rem;
+        align-self: center;
+        text-align: center;
+        padding: 0.75rem 1.25rem;
+        background-color: black;
+        color: red;
+        border-radius: 0.5rem;
+        border: 0.1rem solid #5dade2;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function checkHeight() {
+    if (!container) return;
+    const availableHeight = container.clientHeight;
+    if (availableHeight < threshold) {
+      notice.style.display = "block";
+    } else {
+      notice.style.display = "none";
+    }
+  }
+
+  // Run on load and resize
+  window.addEventListener("resize", checkHeight);
+  window.addEventListener("load", checkHeight);
+  checkHeight();
+}

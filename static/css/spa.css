@@ -323,7 +323,7 @@ ul {
 .info-container {
   display: flex;
   flex-direction: column;  
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
   white-space: nowrap;
   animation: fadeInRight var(--animation-slow) ease forwards;
 }
@@ -474,7 +474,7 @@ footer {
 /* Responsive styles - 1px increase every 300px */
 @media screen and (min-width: 0px) {
   html {
-    font-size: 11px;
+    font-size: 0px;
   }
 }
 @media screen and (min-width: 300px) {

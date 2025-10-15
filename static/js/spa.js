@@ -61,6 +61,10 @@ function initAppLoader() {
       console.error('Poster failed to load. Loader will remain visible.');
     };
   });
+document.addEventListener("DOMContentLoaded", () => {
+  const homeSection = document.querySelector(".content-wrapper");
+  initHeightGuard(homeSection, 400);
+});
 }
 
 initAppLoader();
