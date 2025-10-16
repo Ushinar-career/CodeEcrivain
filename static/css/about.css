@@ -189,6 +189,7 @@
   left: 50%;
   transform: translate(-50%);
   animation: glowDimmed var(--animation-fast) ease-in-out infinite;
+  user-select: none;
 }
 .scroll-down:hover,
 .scroll-up:hover {
@@ -265,3 +266,4 @@
   transform: translate(-50%, -50%) scale(1);
 
 }
+
