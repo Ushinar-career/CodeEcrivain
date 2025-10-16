@@ -7,7 +7,8 @@ function initAppLoader() {
   const darkVideo = document.querySelector('.dark-video');
   const profileImg = document.querySelector('.profile-photo');
   const logoImg = document.querySelector('.logo');
-
+  const wrapper = document.querySelector(".content-wrapper");
+  
   const hqAssets = {
     videoSrc: 'assets/videos/stars_hq.mp4',
     profileSrc: 'assets/images/profile_picture_hq.png',
@@ -15,6 +16,7 @@ function initAppLoader() {
   };
 
   document.addEventListener('DOMContentLoaded', () => {
+    initHeightGuard(wrapper, 400);
     loader.classList.remove('hidden');
     app.classList.add('hidden');
 
@@ -61,10 +63,6 @@ function initAppLoader() {
       console.error('Poster failed to load. Loader will remain visible.');
     };
   });
-document.addEventListener("DOMContentLoaded", () => {
-  const homeSection = document.querySelector(".content-wrapper");
-  initHeightGuard(homeSection, 400);
-});
 }
 
 initAppLoader();
