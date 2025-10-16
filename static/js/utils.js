@@ -224,7 +224,7 @@ initLivingCursor();
 function initHeightGuard(container, options = {}) {
   const threshold = options.threshold || 400;
   const message = options.message || 
-    "❌ Error: Window height is too small to display all sections properly! Please rotate your device or maximize vertically.";
+    "❌ Error: Window height is too small to display all sections properly! Please zoom-out or increase window height vertically.";
 
   // Create notification element if not already present
   let notice = document.querySelector(".height-notice");
@@ -268,3 +268,4 @@ function initHeightGuard(container, options = {}) {
   window.addEventListener("load", checkHeight);
   checkHeight();
 }
+
