@@ -77,9 +77,9 @@ SVG Global cursor initiated by function: `initLivingCursor()` in [utils.js](./st
 - **Dark/Light Theme Toggle** — Switch between dark and light modes. Icon changes as per current theme. Global color scheme for easy update. Load LightTheme video only after toggling. Theme toggling logic is initiated by function: `initThemeToggle()` in [spa.js](./static/js/spa.js#L72)
 
 - **Background Audio Controls** — Play/Pause buttons for ambient music. Hovering on play button loads the lightmode video. before playing pause button is disabled and after playing play button is disabled.
-- **Profile Photo** — Personal or brand image.
-- **Information Section** — Intro text or tagline.
-- **CV Download Icon** — Link to résumé/portfolio file.
+- **Profile Photo** — Personal avatar for privacy.
+- **Information Section** — Initial details.
+- **CV Download Icon** — Link to CV.
 
 ## Navigation Bar
 - **Home** — Landing page.
@@ -91,7 +91,7 @@ SVG Global cursor initiated by function: `initLivingCursor()` in [utils.js](./st
 - Central area for page-specific text, media, and interactive elements.
 
 ## Interactive Element
-- **Chat Icon** — Quick access to an AI powered search.
+- **Chat Icon** — Quick access to an AI chat.
 
 ## Footer Section
 - Footer with copyright text.
@@ -105,8 +105,6 @@ SVG Global cursor initiated by function: `initLivingCursor()` in [utils.js](./st
 ```
 Known Bugs
 
-- [ ] About > Skills - Panels layout issue when screen height is narrow making bottom text unreadable.
-- [ ] About > Tools - Cards layout issue when screen height narrow making bottom text unreadable.
 - [ ] Audio icon not transitioning on hover
 ```
 ---

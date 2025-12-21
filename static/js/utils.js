@@ -2,7 +2,7 @@
 // Global Cursor Logic
 // ==============================
   function initLivingCursor() {
-    // Set <html> style to "cursor: none;"
+  // Set <html> style to "cursor: none;"
   if (!window.matchMedia('(pointer: fine)').matches) return;
 
   const DOT_COUNT   = 50;

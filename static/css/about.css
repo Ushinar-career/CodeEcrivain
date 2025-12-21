@@ -54,6 +54,9 @@
 .journey-step:active * {
   cursor: grabbing;
 }
+.journey-step .section-text-md {
+  animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
+}
 
 /* ------------------------------------------- */
 /* Small screen styles */
@@ -73,12 +76,14 @@
   padding-top: 1rem;
   position: relative;
   overflow: hidden auto;
+  min-height: 90%;
 }
 .interests-container::-webkit-scrollbar {
   display: none;
 }
 .carousel-track {
   display: flex;
+  min-height: 90%;
 }
 .carousel-track * {
   cursor: grab;
@@ -88,22 +93,21 @@
 }
 .block {
   min-width: 100%;
-  padding: 3rem;
+  padding-top: 6rem;
   background: var(--background-transparent);
   border-left: var(--border);
   border-right: var(--border);
   user-select: none;
+  text-align: center;
 }
 .quote-text {
   display: block;
-  text-align: center;
   animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
 }
 .block-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: left;
 }
 .block:hover {
   border-top: var(--border-hover);
@@ -211,6 +215,7 @@
   --p: 0;
 }
 .tools-container {
+  /* border: var(--border); */
   position: relative;
   flex: 1;
   overflow-y: auto;   /* this is the scroller */
@@ -226,9 +231,10 @@
 }
 .card {
   position: fixed;
-  top: 50%;
+  top: 52%;
   left: 50%;
   min-width: 100%;
+  min-height: 80%;
   padding: 3rem;
   border-left: var(--border);
   border-right: var(--border);
@@ -242,7 +248,8 @@
 }
 .card strong {
   animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
-}.tools-container:hover .card {
+}
+.tools-container:hover .card {
   border-top: var(--border-hover);
   border-bottom: var(--border-hover);
 }
@@ -264,6 +271,12 @@
   pointer-events: auto;
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
-
 }
 
+/* ------------------------------------------- */
+/* Small screen styles */
+@media screen and (max-width: 600px) {
+  .card {
+    padding: 1rem;
+  }
+}
