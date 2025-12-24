@@ -93,7 +93,7 @@
 }
 .block {
   min-width: 100%;
-  padding-top: 6rem;
+  padding-top: 3rem;
   background: var(--background-transparent);
   border-left: var(--border);
   border-right: var(--border);

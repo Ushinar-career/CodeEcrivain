@@ -183,12 +183,12 @@ function initGenericPopup() {
 
   const popupImage = document.createElement("img");
   popupImage.alt = "Profile Image";
-  popupImage.title = "Ushinar Chatterjee";
+  popupImage.title = "My Avatar";
   popupImage.classList.add("popup-image");
 
   const popupMessage = document.createElement("p");
   popupMessage.classList.add("popup-message");
-  popupMessage.textContent = "Chat feature is currently under development.";
+  popupMessage.textContent = "Feature is currently under development.";
 
   popupContent.appendChild(popupImage);
   popupContent.appendChild(popupMessage);
@@ -211,14 +211,14 @@ function initGenericPopup() {
     if (contentType === 'profile') {
       popupImage.classList.remove("hidden");
       popupMessage.classList.add("hidden");
-    } else if (contentType === 'chat') {
+    } else if (contentType === 'message') {
       popupMessage.classList.remove("hidden");
       popupImage.classList.add("hidden");
     }
   }
 
   profilePhoto.addEventListener("click", () => showPopup('profile'));
-  chatIcon.addEventListener("click", () => showPopup('chat'));
+  chatIcon.addEventListener("click", () => showPopup('message'));
 
   closeIcon.addEventListener("click", () => {
     popup.classList.add("hidden");
@@ -397,4 +397,3 @@ function initNavigation() {
 }
 
 initNavigation();
-

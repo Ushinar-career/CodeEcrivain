@@ -95,7 +95,7 @@ body {
   overflow: hidden;
   color: var(--primary-color);
   background: var(--background-color);
-  font-family: 'Trebuchet MS';
+  font-family: 'Trebuchet MS', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
 }
 .hidden {
@@ -116,6 +116,7 @@ body {
   --border-transparent: 0.01rem solid transparent;
 }
 .material-icons {
+  display: inline-block;
   font-size: var(--font-size-md);
   font-family: 'Material Icons';
   color: var(--hover-color);
@@ -345,8 +346,7 @@ ul {
   transition: color var(--animation-fast);
 }
 .download-icon,
-.download-icon:hover
- {
+.download-icon:hover {
   text-decoration: none;
   border: none;
 }
@@ -468,8 +468,6 @@ footer {
 
 
 
-
-
 /* ------------------------------------------- */
 /* Responsive styles - 1px increase every 300px */
 @media screen and (min-width: 0px) {
@@ -484,31 +482,32 @@ footer {
 }
 @media screen and (min-width: 600px) {
   html {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 @media screen and (min-width: 900px) {
   html {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 @media screen and (min-width: 1200px) {
   html {
-    font-size: 15px;
+    font-size: 18px;
   }
 }
 @media screen and (min-width: 1500px) {
   html {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 @media screen and (min-width: 1800px) {
   html {
-    font-size: 17px;
+    font-size: 22px;
   }
 }
 @media screen and (min-width: 2100px) {
   html {
-    font-size: 18px;
+    font-size: 24px;
   }
 }
+

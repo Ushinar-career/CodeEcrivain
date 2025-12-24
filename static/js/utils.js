@@ -269,3 +269,23 @@ function initHeightGuard(container, options = {}) {
   checkHeight();
 }
 
+function initHelp() {
+  const helpBtn = document.querySelector(".help-btn");
+
+  if (!helpBtn) {
+    console.error("Help button not found.");
+    return;
+  }
+
+  helpBtn.addEventListener("click", () => {
+    // Open help.html from static/content/
+    window.open("/static/content/help.html", "_blank");
+  });
+}
+
+// Initialize
+initHelp();
+
+
+
+

@@ -1,14 +1,12 @@
 # About
 
-This document is created to guide the users of [CodeÉcrivain](https://ushinar-career.github.io/CodeEcrivain/) on how to navigate and what features it provides.
+This page guides users of [**CodeÉcrivain**](https://ushinar-career.github.io/CodeEcrivain/) on how to navigate the site and explore its features.
 
 ---
 
 # Overview
 
- **CodeÉcrivain** is a curated space to introduce myself and my work.
-
-<!-- ![screen-shot of landing page]() -->
+[**CodeÉcrivain**](https://ushinar-career.github.io/CodeEcrivain/) is a curated space that introduces my work and personal projects.
 
 **App Structure:**
 
@@ -26,6 +24,7 @@ This document is created to guide the users of [CodeÉcrivain](https://ushinar-c
 │   │   ├── earth_logo_hq.png
 │   │   ├── earth_logo_lq.png
 │   │   ├── favicon.png
+│   │   ├── landing_page.png
 │   │   ├── profile_picture_hq.png
 │   │   ├── profile_picture_lq.png
 │   │   └── stars_lq.jpg
@@ -33,7 +32,7 @@ This document is created to guide the users of [CodeÉcrivain](https://ushinar-c
 │       ├── clouds_hq.mp4
 │       └── stars_hq.mp4
 ├── files/
-│   └── abc.pdf
+│   └── resume.pdf
 ├── index.html
 ├── spa.html
 ├── static/
@@ -61,50 +60,46 @@ This document is created to guide the users of [CodeÉcrivain](https://ushinar-c
 
 # Features
 
-Designed as a SPA, **CodeÉcrivain** comprises of common and dynamic sections. 
+Built as a Single Page Application (SPA), [**CodeÉcrivain**](https://ushinar-career.github.io/CodeEcrivain/) includes both static and dynamic sections.
 
 ## Site Loading
-Site loading logic is initiated by function: `initAppLoader()` in [spa.js](./static/js/spa.js#L4) which displays a global loader till the full app is rendered to preserve initial animations.
+The site loading sequence is managed by the function `initAppLoader()` in [spa.js](/static/js/spa.js#L4). It displays a global loader until the application is fully rendered, ensuring smooth initial animations.
 
 ## Living Cursor
-Cursor is disabled by default and replaced with an animated SVG cursor. On hovering above clickable options the cursor pointer appears else only custom animated cursor is displayed.
-SVG Global cursor initiated by function: `initLivingCursor()` in [utils.js](./static/js/utils.js#L4)
+The default cursor is replaced with an animated SVG cursor. When hovering over clickable elements, the pointer appears; otherwise, only the custom animated cursor is shown.  
+This feature is initialized by the function `initLivingCursor()` in [utils.js](/static/js/utils.js#L4).
 
 ## Header Area
 
-- **Top Ribbon Header Video** — Ribbon loop video banner at the top. Poster is displayed first for slow networks. Initial darkmode video is loaded. Video changes when toggled to lightmode. No separate chunking and streaming logic, provided by hosting platforms by default. No js required.
-
-- **Dark/Light Theme Toggle** — Switch between dark and light modes. Icon changes as per current theme. Global color scheme for easy update. Load LightTheme video only after toggling. Theme toggling logic is initiated by function: `initThemeToggle()` in [spa.js](./static/js/spa.js#L72)
-
-- **Background Audio Controls** — Play/Pause buttons for ambient music. Hovering on play button loads the lightmode video. before playing pause button is disabled and after playing play button is disabled.
-- **Profile Photo** — Personal avatar for privacy.
-- **Information Section** — Initial details.
-- **CV Download Icon** — Link to CV.
+- **Top Ribbon Header Video** — A looping video banner at the top. A poster image loads first for slower networks. The dark-mode video is shown initially, and switches to the light-mode video when toggled. Streaming is handled by the hosting platform, requiring no additional JavaScript.  
+- **Dark/Light Theme Toggle** — Allows switching between dark and light modes. The icon updates according to the current theme. The light-mode video loads only after toggling. Logic is handled by `initThemeToggle()` in [spa.js](/static/js/spa.js#L72).  
+- **Background Audio Controls** — Play/Pause buttons control ambient music. When hovering over the play button, the light-mode video loads. The pause button is disabled before playback, and the play button is disabled once playback begins.  
+- **Profile Photo** — Displays a personal avatar.  
+- **Information Section** — Shows introductory details.  
+- **CV Download Icon** — Provides a link to download the CV.  
 
 ## Navigation Bar
-- **Home** — Landing page.
-- **About** — Personal/professional background.
-- **Projects** — Showcase portfolio.
-- **Contact** — Communication form or details.
+- **Home** — Landing page.  
+- **About** — Personal and professional background.  
+- **Projects** — Portfolio showcase.  
+- **Contact** — Communication form and details.  
 
 ## Main Content Section
-- Central area for page-specific text, media, and interactive elements.
+The central area displays page-specific text, media, and interactive elements.
 
 ## Interactive Element
-- **Chat Icon** — Quick access to an AI chat.
+- **Chat Icon** — Quick access to an AI-powered chat.  
 
 ## Footer Section
-- Footer with copyright text.
+Contains copyright information.
 
 ---
 
-## NEXT STEPS
+# Next Steps
 
-- Structure as PWA
+- [ ] Add Help feature  
+- [ ] Add Chat feature  
 
-```
-Known Bugs
+# Known Bugs
 
-- [ ] Audio icon not transitioning on hover
-```
----
+- None reported  
