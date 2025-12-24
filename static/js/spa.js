@@ -122,9 +122,6 @@ function initThemeToggle() {
 
 initThemeToggle();
 
-// ==============================
-// Audio Controls Logic (Toggle)
-// ==============================
 function initAudio() {
   const audio = document.querySelector('.bg-audio');
   const toggleBtn = document.querySelector('.audio-toggle');
@@ -134,7 +131,7 @@ function initAudio() {
 
   audio.volume = 0.5;
 
-  // Ensure audio src is set lazily
+  // Lazy load audio source on hover
   toggleBtn.addEventListener('mouseenter', () => {
     if (!isSrcSet) {
       const src = audio.getAttribute('data-src');
@@ -148,7 +145,6 @@ function initAudio() {
   // Toggle play/pause on click
   toggleBtn.addEventListener('click', async () => {
     if (audio.paused) {
-      audio.currentTime = 0;
       try { await audio.play(); } catch (e) { console.error(e); }
       toggleBtn.textContent = 'volume_off';
     } else {
@@ -157,7 +153,7 @@ function initAudio() {
     }
   });
 
-  // Sync icon when audio ends
+  // Reset icon when audio ends
   audio.addEventListener('ended', () => {
     toggleBtn.textContent = 'volume_up';
   });
