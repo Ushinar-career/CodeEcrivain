@@ -1,7 +1,9 @@
+<!-- help.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Help</title>
   <link rel="icon" href="assets/images/earth_logo_hq.png">
   <link rel="stylesheet" href="static/css/help.css" />
@@ -28,101 +30,85 @@
     <!-- Content -->
     <div class="content">Loading help...</div>
   </div>
+<script>
+  // Utility: smooth scroll accounting for fixed header
+  function scrollToHeading(targetEl) {
+    const headerHeight = document.querySelector('.header-bar').offsetHeight || 64;
+    const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
+    const offsetTop = elementTop - headerHeight;
+    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+  }
 
-  <script>
-    // Utility: smooth scroll accounting for fixed header
-    function scrollToHeading(targetEl) {
-      const headerHeight = document.querySelector('.header-bar').offsetHeight || 64;
-      const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
-      const offsetTop = elementTop - headerHeight;
-      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-    }
-
-    async function loadMarkdown() {
-      try {
-        const response = await fetch("ReadMe.md");
-        if (!response.ok) {
-          throw new Error(`Failed to load ReadMe.md: ${response.statusText}`);
-        }
-
-        const markdownText = await response.text();
-
-        const contentEl = document.querySelector(".content");
-        contentEl.innerHTML = marked.parse(markdownText);
-
-        // Ensure headings have IDs and apply scroll offset behavior
-        const headings = contentEl.querySelectorAll("h1, h2, h3, h4, h5, h6");
-        headings.forEach((heading, index) => {
-          if (!heading.id) heading.id = "heading-" + index;
-          // CSS handles default anchor scroll offset via scroll-margin-top,
-          // but we also support JS-based smooth scroll when clicking sidebar links.
-          heading.classList.add('anchor-target');
-        });
-
-        // Build sidebar links
-        const sidebarLinksEl = document.querySelector(".sidebar-links");
-        sidebarLinksEl.innerHTML = "";
-        headings.forEach((heading) => {
-          const link = document.createElement("a");
-          link.href = "#" + heading.id;
-          link.textContent = heading.textContent;
-
-          // Indent based on heading level
-          const level = parseInt(heading.tagName.substring(1), 10);
-          link.className = `topic-link level-${level}`;
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const target = document.getElementById(heading.id);
-            if (target) scrollToHeading(target);
-            // Update URL hash without triggering native jump
-            history.replaceState(null, "", `#${heading.id}`);
-          });
-
-          sidebarLinksEl.appendChild(link);
-        });
-
-        // If page is refreshed with a hash, reset to top (initial starting point)
-        history.replaceState(null, "", window.location.pathname);
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      } catch (error) {
-        const contentEl = document.querySelector(".content");
-        contentEl.textContent = "Error loading help content.";
-        console.error(error);
-      }
-    }
-
-    // Sidebar collapsing
-    function initSidebarToggle() {
-      const toggleBtn = document.querySelector(".sidebar-toggle");
-      const sidebar = document.querySelector(".sidebar");
-      const mainLayout = document.querySelector(".main-layout");
-
-      function applyLayout() {
-        const collapsed = sidebar.classList.contains("collapsed");
-        mainLayout.style.setProperty('--sidebar-current-width', collapsed ? '52px' : '260px');
+  async function loadMarkdown() {
+    try {
+      const response = await fetch("ReadMe.md");
+      if (!response.ok) {
+        throw new Error(`Failed to load ReadMe.md: ${response.statusText}`);
       }
 
-      toggleBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("collapsed");
-        applyLayout();
+      const markdownText = await response.text();
+
+      const contentEl = document.querySelector(".content");
+      contentEl.innerHTML = marked.parse(markdownText);
+
+      // Ensure headings have IDs
+      const headings = contentEl.querySelectorAll("h1, h2, h3, h4, h5, h6");
+      headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = "heading-" + index;
+        heading.classList.add('anchor-target');
       });
 
-      applyLayout(); // set initial width
+      // Build sidebar links
+      const sidebarLinksEl = document.querySelector(".sidebar-links");
+      sidebarLinksEl.innerHTML = "";
+      headings.forEach((heading) => {
+        const link = document.createElement("a");
+        link.textContent = heading.textContent;
+        link.className = `topic-link level-${parseInt(heading.tagName.substring(1), 10)}`;
+
+        // Prevent hash navigation, just smooth scroll
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          scrollToHeading(heading);
+        });
+
+        sidebarLinksEl.appendChild(link);
+      });
+
+      // Reset scroll to top on load
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } catch (error) {
+      const contentEl = document.querySelector(".content");
+      contentEl.textContent = "Error loading help content.";
+      console.error(error);
+    }
+  }
+
+  // Sidebar collapsing
+  function initSidebarToggle() {
+    const toggleBtn = document.querySelector(".sidebar-toggle");
+    const sidebar = document.querySelector(".sidebar");
+    const mainLayout = document.querySelector(".main-layout");
+
+    function applyLayout() {
+      const collapsed = sidebar.classList.contains("collapsed");
+      mainLayout.style.setProperty('--sidebar-current-width', collapsed ? '3rem' : '13rem');
     }
 
-    // Initialize
-    loadMarkdown().then(() => {
-      initSidebarToggle();
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+      applyLayout();
     });
 
-    // Prevent native anchor jump when hash changes due to any external cause
-    window.addEventListener('hashchange', (e) => {
-      e.preventDefault();
-      const id = location.hash.slice(1);
-      const target = id ? document.getElementById(id) : null;
-      if (target) scrollToHeading(target);
-    });
-  </script>
+    applyLayout(); // set initial width
+  }
+
+  // Initialize
+  loadMarkdown().then(() => {
+    initSidebarToggle();
+  });
+</script>
+
 </body>
 </html>
 

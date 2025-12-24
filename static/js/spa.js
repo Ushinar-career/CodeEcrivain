@@ -123,25 +123,19 @@ function initThemeToggle() {
 initThemeToggle();
 
 // ==============================
-// Audio Controls Logic
+// Audio Controls Logic (Toggle)
 // ==============================
 function initAudio() {
   const audio = document.querySelector('.bg-audio');
-  const playBtn = document.querySelector('.play-btn');
-  const pauseBtn = document.querySelector('.pause-btn');
+  const toggleBtn = document.querySelector('.audio-toggle');
   let isSrcSet = false;
 
-  if (!audio) return;
+  if (!audio || !toggleBtn) return;
 
   audio.volume = 0.5;
 
-  const updateButtonOpacity = () => {
-    const paused = audio.paused;
-    playBtn?.classList.toggle('dimmed', !paused);
-    pauseBtn?.classList.toggle('dimmed', paused);
-  };
-
-  playBtn?.addEventListener('mouseenter', () => {
+  // Ensure audio src is set lazily
+  toggleBtn.addEventListener('mouseenter', () => {
     if (!isSrcSet) {
       const src = audio.getAttribute('data-src');
       if (src) {
@@ -151,25 +145,26 @@ function initAudio() {
     }
   });
 
-  playBtn?.addEventListener('click', async () => {
-    audio.currentTime = 0;
-    try { await audio.play(); } catch (e) { console.error(e); }
-    updateButtonOpacity();
+  // Toggle play/pause on click
+  toggleBtn.addEventListener('click', async () => {
+    if (audio.paused) {
+      audio.currentTime = 0;
+      try { await audio.play(); } catch (e) { console.error(e); }
+      toggleBtn.textContent = 'volume_off';
+    } else {
+      audio.pause();
+      toggleBtn.textContent = 'volume_up';
+    }
   });
 
-  pauseBtn?.addEventListener('click', () => {
-    audio.pause();
-    updateButtonOpacity();
+  // Sync icon when audio ends
+  audio.addEventListener('ended', () => {
+    toggleBtn.textContent = 'volume_up';
   });
-
-  ['play', 'pause', 'ended'].forEach(evt => {
-    audio.addEventListener(evt, updateButtonOpacity);
-  });
-
-  updateButtonOpacity();
 }
 
-initAudio()
+initAudio();
+
 
 // ==============================
 // Generic Popup Logic

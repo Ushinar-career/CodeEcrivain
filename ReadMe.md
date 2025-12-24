@@ -2,8 +2,6 @@
 
 This page guides users of [**CodeÉcrivain**](https://ushinar-career.github.io/CodeEcrivain/) on how to navigate the site and explore its features.
 
----
-
 # Overview
 
 [**CodeÉcrivain**](https://ushinar-career.github.io/CodeEcrivain/) is a curated space that introduces my work and personal projects.
@@ -54,9 +52,9 @@ This page guides users of [**CodeÉcrivain**](https://ushinar-career.github.io/C
 │       ├── main.js
 │       ├── projects.js
 │       └── sidebar.js
-```
 
----
+
+```
 
 # Features
 
@@ -93,11 +91,8 @@ The central area displays page-specific text, media, and interactive elements.
 ## Footer Section
 Contains copyright information.
 
----
-
 # Next Steps
 
-- [ ] Add Help feature  
 - [ ] Add Chat feature  
 
 # Known Bugs

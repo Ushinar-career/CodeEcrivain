@@ -1,5 +1,5 @@
+/* help.css */
 :root {
-  /* Basic Styling */
   --background-color: #111;
   --primary-color: #5fbff8;
   --hover-color: wheat;
@@ -8,11 +8,9 @@
   --border-hover: 0.9px solid var(--hover-color);
   --radius-rounded: 0.5rem;
 
-  --header-height: 64px;
-  --sidebar-width: 260px;
-  --sidebar-collapsed-width: 52px;
+  --header-height: 6rem;
+  --sidebar-collapsed-width: 3rem;
 
-  --sidebar-current-width: var(--sidebar-width);
 }
 
 html {
@@ -21,7 +19,6 @@ html {
 }
 
 body {
-  margin: 0;
   color: var(--primary-color);
   background: var(--background-color);
   font-family: 'Trebuchet MS', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
@@ -29,7 +26,7 @@ body {
 
 a { color: var(--hover-color); text-decoration: none; }
 a:hover { color: var(--hover-color); opacity: 0.9; }
-img { max-width: 100%; height: auto; }
+img { max-width: 100%; height: auto; padding-left: 1rem;}
 pre { margin: 0 auto; padding-left: 3rem; }
 
 .header-bar {
@@ -41,9 +38,8 @@ pre { margin: 0 auto; padding-left: 3rem; }
   height: var(--header-height);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 
-  padding: 0 1rem;
   background: var(--background-color);
   border-bottom: var(--border-hover);
   color: var(--primary-color);
@@ -60,7 +56,6 @@ pre { margin: 0 auto; padding-left: 3rem; }
   display: flex;
   padding-top: var(--header-height);
   margin-left: var(--sidebar-current-width);
-  transition: margin-left 0.25s ease;
 }
 
 .sidebar {
@@ -68,7 +63,7 @@ pre { margin: 0 auto; padding-left: 3rem; }
   top: var(--header-height);
   left: 0;
 
-  width: var(--sidebar-current-width);
+  width: fit-content;
   height: calc(100vh - var(--header-height));
 
   background: var(--background-color);
@@ -78,8 +73,6 @@ pre { margin: 0 auto; padding-left: 3rem; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: width 0.25s ease;
-  z-index: 900;
 }
 
 .sidebar-top {
@@ -87,21 +80,18 @@ pre { margin: 0 auto; padding-left: 3rem; }
   align-items: center;
   justify-content: space-between;
 
-  padding: 0.75rem;
+  padding: 1rem;
   border-bottom: var(--border);
 }
 
 .sidebar-title {
   font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--primary-color);
 }
 
 .sidebar-toggle {
   background: none;
   border: var(--border);
   color: var(--primary-color);
-  padding: 0.35rem 0.55rem;
   cursor: pointer;
   border-radius: var(--radius-rounded);
 }
@@ -111,15 +101,16 @@ pre { margin: 0 auto; padding-left: 3rem; }
 }
 
 .sidebar-links {
-  padding: 0.5rem 0.75rem;
+  padding: 1rem;
   overflow-y: auto;
   flex: 1;
+  cursor: pointer;
 }
 
 .topic-link {
   display: block;
   margin: 0.25rem 0;
-  padding: 0.25rem 0.25rem;
+  padding: 0.25rem;
   color: var(--primary-color);
   border-radius: var(--radius-rounded);
 }
@@ -142,6 +133,13 @@ pre { margin: 0 auto; padding-left: 3rem; }
 }
 .sidebar.collapsed .sidebar-links {
   display: none;
+}
+.sidebar.collapsed .sidebar-top {
+  justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  margin: 0 auto;
 }
 
 .content {
@@ -167,5 +165,50 @@ pre { margin: 0 auto; padding-left: 3rem; }
 .content h5,
 .content h6 {
   scroll-margin-top: var(--header-height);
+}
+
+
+
+/* ------------------------------------------- */
+/* Responsive styles - 1px increase every 300px */
+@media screen and (min-width: 0px) {
+  html {
+    font-size: 0px;
+  }
+}
+@media screen and (min-width: 300px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 900px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 1500px) {
+  html {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1800px) {
+  html {
+    font-size: 22px;
+  }
+}
+@media screen and (min-width: 2100px) {
+  html {
+    font-size: 24px;
+  }
 }
 
