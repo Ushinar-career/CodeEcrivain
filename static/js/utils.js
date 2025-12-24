@@ -279,7 +279,7 @@ function initHelp() {
 
   helpBtn.addEventListener("click", () => {
     // Open help.html from static/content/
-    window.open("/static/content/help.html", "_blank");
+    window.open("static/content/help.html", "_blank");
   });
 }
 
