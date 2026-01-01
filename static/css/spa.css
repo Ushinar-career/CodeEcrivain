@@ -503,6 +503,7 @@ ul {
   display: flex;
   flex-direction: column;
   background: var(--background-color);
+  font-size: var(--font-size-sm);
   color: red;
   overflow: auto;
 }
