@@ -63,28 +63,23 @@ function activateContentBlock(topic, sectionMain, contentBlocks) {
     block.classList.remove("active");
   });
 
-  // Show selected block
   const activeBlock = sectionMain.querySelector(`.section-content[data-content="${topic}"]`);
 
   if (activeBlock) {
     activeBlock.classList.remove("hidden");
     activeBlock.classList.add("active");
 
-    // 🎯 Initialize timeline only when "journey" is activated
     if (topic === "journey") {
       initJourney(activeBlock);
     }
 
-    // 🎯 Initialize carousel only when "interests" is activated
     if (topic === "interests") {
       initInterests(activeBlock);
     }
 
-    // 🎯 Initialize sticky Skills stack only when "skills" is activated
     if (topic === "skills") {
       initSkills(activeBlock);
     }
-      // 🎯 Initialize sticky Skills stack only when "skills" is activated
     if (topic === "tools") {
       initTools(activeBlock);
     }

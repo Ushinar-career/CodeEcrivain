@@ -134,6 +134,25 @@
   animation: none;
   opacity: 1;
 }
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--hover-color);
+  margin: 0 5px;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--primary-color);
+}
 
 /* ------------------------------------------- */
 /* Small screen styles */

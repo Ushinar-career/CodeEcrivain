@@ -218,6 +218,25 @@
 initLivingCursor();
 
 // ==============================
+// Global Loader Logic
+// ==============================
+function showLoader(loaderSelector = '.global-loader', appSelector = '.app-container') {
+  const loader = document.querySelector(loaderSelector);
+  const app = document.querySelector(appSelector);
+
+  if (loader) loader.classList.remove('hidden');
+  if (app) app.classList.add('hidden');
+}
+
+function hideLoader(loaderSelector = '.global-loader', appSelector = '.app-container') {
+  const loader = document.querySelector(loaderSelector);
+  const app = document.querySelector(appSelector);
+
+  if (loader) loader.classList.add('hidden');
+  if (app) app.classList.remove('hidden');
+}
+
+// ==============================
 // Height Guard Logic
 // ==============================
 
@@ -271,12 +290,6 @@ function initHeightGuard(container, options = {}) {
 
 function initHelp() {
   const helpBtn = document.querySelector(".help-btn");
-
-  if (!helpBtn) {
-    console.error("Help button not found.");
-    return;
-  }
-
   helpBtn.addEventListener("click", () => {
     // Open help.html from static/content/
     window.open("help.html", "_blank");

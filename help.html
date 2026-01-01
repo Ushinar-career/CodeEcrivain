@@ -1,114 +1,109 @@
-<!-- help.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Help</title>
   <link rel="icon" href="assets/images/earth_logo_hq.png">
   <link rel="stylesheet" href="static/css/help.css" />
-  <script src="static/js/marked.min.js"></script>
 </head>
+
 <body>
-  <!-- Fixed Header -->
-  <header class="header-bar">
-    <img src="assets/images/earth_logo_hq.png" alt="Logo" class="logo" />
-    <h1>Help</h1>
-  </header>
-
-  <!-- Main layout (below fixed header) -->
-  <div class="main-layout">
-    <!-- Sidebar -->
-    <nav class="sidebar" aria-label="Help topics">
-      <div class="sidebar-top">
-        <span class="sidebar-title">TOPICS</span>
-        <button class="sidebar-toggle" aria-label="Toggle topics">☰</button>
-      </div>
-      <div class="sidebar-links"></div>
-    </nav>
-
-    <!-- Content -->
-    <div class="content">Loading help...</div>
+  <!-- Global Loader -->
+  <div class="global-loader">
+    <div class="spinner"></div>
   </div>
+
+  <!-- App Container -->
+  <div class="app-container hidden">
+    <header class="header-bar">
+      <img src="assets/images/earth_logo_hq.png" alt="Earth Logo" class="logo" />
+      <h1>Help Center</h1>
+    </header>
+
+    <main class="main-layout">
+      <nav class="sidebar" aria-label="Help topics">
+        <div class="sidebar-top">
+          <span class="sidebar-title">TOPICS</span>
+          <button class="sidebar-toggle" aria-label="Toggle topics">☰</button>
+        </div>
+        <div class="sidebar-links"></div>
+      </nav>
+
+      <section class="content"></section>
+    </main>
+  </div>
+<script src="static/js/marked.min.js"></script>
 <script>
-  // Utility: smooth scroll accounting for fixed header
-  function scrollToHeading(targetEl) {
-    const headerHeight = document.querySelector('.header-bar').offsetHeight || 64;
-    const elementTop = targetEl.getBoundingClientRect().top + window.scrollY;
-    const offsetTop = elementTop - headerHeight;
-    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+  // Loader helpers
+  function showLoader() {
+    document.querySelector('.global-loader').classList.remove('hidden');
+    document.querySelector('.app-container').classList.add('hidden');
+  }
+  function hideLoader() {
+    document.querySelector('.global-loader').classList.add('hidden');
+    document.querySelector('.app-container').classList.remove('hidden');
   }
 
+  // Load markdown into content + build sidebar
   async function loadMarkdown() {
+    const content = document.querySelector(".content");
     try {
-      const response = await fetch("ReadMe.md");
-      if (!response.ok) {
-        throw new Error(`Failed to load ReadMe.md: ${response.statusText}`);
-      }
-
-      const markdownText = await response.text();
-
-      const contentEl = document.querySelector(".content");
-      contentEl.innerHTML = marked.parse(markdownText);
-
-      // Ensure headings have IDs
-      const headings = contentEl.querySelectorAll("h1, h2, h3, h4, h5, h6");
-      headings.forEach((heading, index) => {
-        if (!heading.id) heading.id = "heading-" + index;
-        heading.classList.add('anchor-target');
-      });
+      const res = await fetch("ReadMe.md");
+      if (!res.ok) throw new Error(res.statusText);
+      const text = await res.text();
+      content.innerHTML = marked.parse(text);
 
       // Build sidebar links
-      const sidebarLinksEl = document.querySelector(".sidebar-links");
-      sidebarLinksEl.innerHTML = "";
-      headings.forEach((heading) => {
-        const link = document.createElement("a");
-        link.textContent = heading.textContent;
-        link.className = `topic-link level-${parseInt(heading.tagName.substring(1), 10)}`;
-
-        // Prevent hash navigation, just smooth scroll
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          scrollToHeading(heading);
-        });
-
-        sidebarLinksEl.appendChild(link);
+      const headings = content.querySelectorAll("h1,h2,h3,h4,h5,h6");
+      const links = document.querySelector(".sidebar-links");
+      links.innerHTML = "";
+      headings.forEach((h, i) => {
+        if (!h.id) h.id = `heading-${i}`;
+        const a = document.createElement("a");
+        a.textContent = h.textContent;
+        a.className = `topic-link level-${h.tagName.substring(1)}`;
+        a.href = `#${h.id}`;
+        links.appendChild(a);
       });
-
-      // Reset scroll to top on load
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    } catch (error) {
-      const contentEl = document.querySelector(".content");
-      contentEl.textContent = "Error loading help content.";
-      console.error(error);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      console.error("Failed to load markdown:", err);
+      content.textContent = "Error loading help content.";
     }
   }
 
-  // Sidebar collapsing
+  // Sidebar toggle
   function initSidebarToggle() {
-    const toggleBtn = document.querySelector(".sidebar-toggle");
+    const btn = document.querySelector(".sidebar-toggle");
     const sidebar = document.querySelector(".sidebar");
-    const mainLayout = document.querySelector(".main-layout");
-
-    function applyLayout() {
-      const collapsed = sidebar.classList.contains("collapsed");
-      mainLayout.style.setProperty('--sidebar-current-width', collapsed ? '3rem' : '13rem');
-    }
-
-    toggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("collapsed");
-      applyLayout();
-    });
-
-    applyLayout(); // set initial width
+    const layout = document.querySelector(".main-layout");
+    const apply = () =>
+      layout.style.setProperty(
+        '--sidebar-current-width',
+        sidebar.classList.contains("collapsed") ? '3rem' : '13rem'
+      );
+    btn.onclick = () => { sidebar.classList.toggle("collapsed"); apply(); };
+    apply();
   }
 
-  // Initialize
-  loadMarkdown().then(() => {
-    initSidebarToggle();
-  });
+window.addEventListener("DOMContentLoaded", async () => {
+  // Loader is already visible by default
+  await loadMarkdown();
+  initSidebarToggle();
+
+  const logo = document.querySelector(".logo");
+  if (logo.complete) {
+    // Logo already cached/loaded
+    hideLoader();
+  } else {
+    logo.addEventListener("load", hideLoader);
+    logo.addEventListener("error", hideLoader); // fallback
+  }
+});
+
 </script>
 
 </body>
 </html>
-

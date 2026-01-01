@@ -62,6 +62,8 @@ Built as a Single Page Application (SPA), [**CodeÉcrivain**](https://ushinar-ca
 
 ## Site Loading
 The site loading sequence is managed by the function `initAppLoader()` in [spa.js](/static/js/spa.js#L4). It displays a global loader until the application is fully rendered, ensuring smooth initial animations.
+> ⚠️ **Warning:** Ensure proper window height for site operation.
+
 
 ## Living Cursor
 The default cursor is replaced with an animated SVG cursor. When hovering over clickable elements, the pointer appears; otherwise, only the custom animated cursor is shown.  
@@ -85,7 +87,7 @@ This feature is initialized by the function `initLivingCursor()` in [utils.js](/
 ## Main Content Section
 The central area displays page-specific text, media, and interactive elements.
 
-## Interactive Element
+## AI Chat Interaction
 - **Chat Icon** — Quick access to an AI-powered chat.  
 
 ## Footer Section

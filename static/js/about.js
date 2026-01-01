@@ -1,7 +1,5 @@
-// These functions are called in sidebar.js
-
 // ==============================
-// Journey Timeline Drag Visuals
+// Journey Visuals
 // ==============================
 let wiggleTimeout;
 let wiggleActive = false;
@@ -119,7 +117,7 @@ function initJourney(container) {
       step.style.transition = "transform 0.3s ease";
       step.style.transform = "rotate(0deg)";
       step.style.removeProperty("border-color");
-      journeyDemoRunning = false; // Reset flag when stopped
+      journeyDemoRunning = false;
     }
 
     function resumeWiggle() {
@@ -167,7 +165,6 @@ function initJourney(container) {
     });
   }
 
-  // Initialize everything
   resetStepPositions();
   enableHorizontalDrag();
   runJourneyDemo();
@@ -184,15 +181,17 @@ function initJourney(container) {
 // ==============================
 function initInterests(container) {
   if (!container) return;
-
   const scrollable = container.querySelector('.interests-container');
   scrollable.scrollTo({ top: 0, behavior: 'smooth' });
 
   const track = container.querySelector('.carousel-track');
   const leftArrow = container.querySelector('.arrow-left');
   const rightArrow = container.querySelector('.arrow-right');
-  if (!track || !leftArrow || !rightArrow) return;
+  const dotsContainer = container.querySelector('.carousel-dots');
 
+  if (!track || !leftArrow || !rightArrow || !dotsContainer) return;
+
+  // Cleanup if already initialized
   if (container._carouselCleanup) {
     container._carouselCleanup();
     container._carouselCleanup = null;
@@ -207,6 +206,7 @@ function initInterests(container) {
   const total = originals.length;
   if (total === 0) return;
 
+  // Clone first and last for infinite loop
   const firstClone = originals[0].cloneNode(true);
   const lastClone = originals[total - 1].cloneNode(true);
   firstClone.dataset.clone = 'true';
@@ -225,15 +225,12 @@ function initInterests(container) {
   const setTransform = () => {
     track.style.transform = `translateX(-${index * 100}%)`;
   };
-
   const enableTransition = () => {
     track.style.transition = 'transform 1.5s ease';
   };
-
   const disableTransition = () => {
     track.style.transition = 'none';
   };
-
   const updatePosition = () => {
     isTransitioning = true;
     enableTransition();
@@ -243,9 +240,34 @@ function initInterests(container) {
   disableTransition();
   setTransform();
 
+  // --- DOTS ---
+  dotsContainer.innerHTML = '';
+  const dots = [];
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    if (i === 0) dot.classList.add('active');
+    dotsContainer.appendChild(dot);
+    dots.push(dot);
+
+    dot.addEventListener('click', () => {
+      if (isTransitioning) return;
+      index = i + 1; // +1 because of leading clone
+      updatePosition();
+    });
+  }
+
+  function updateDots() {
+    dots.forEach(dot => dot.classList.remove('active'));
+    let logicalIndex = index - 1; // adjust for leading clone
+    if (logicalIndex >= total) logicalIndex = 0;
+    if (logicalIndex < 0) logicalIndex = total - 1;
+    dots[logicalIndex].classList.add('active');
+  }
+
+  // --- Transition End ---
   const onTransitionEnd = (e) => {
     if (e.propertyName && e.propertyName !== 'transform') return;
-
     if (index === 0) {
       disableTransition();
       index = total;
@@ -257,46 +279,32 @@ function initInterests(container) {
       setTransform();
       track.offsetHeight;
     }
-
     scrollable.scrollTo({ top: 0, behavior: 'smooth' });
-
-    requestAnimationFrame(() => { isTransitioning = false; });
+    requestAnimationFrame(() => {
+      isTransitioning = false;
+      updateDots(); // 🔥 update dots here
+    });
   };
 
-
+  // --- Navigation ---
   const goLeft = () => {
     if (isTransitioning) return;
     index--;
     updatePosition();
   };
-
   const goRight = () => {
     if (isTransitioning) return;
     index++;
     updatePosition();
   };
 
+  // --- Event Handlers ---
   const onLeftClick = () => goLeft();
   const onRightClick = () => goRight();
+  const onLeftTouch = (e) => { if (!isTransitioning) { e.preventDefault(); goLeft(); } };
+  const onRightTouch = (e) => { if (!isTransitioning) { e.preventDefault(); goRight(); } };
 
-  const onLeftTouch = (e) => {
-    if (isTransitioning) return;
-    e.preventDefault();
-    goLeft();
-  };
-
-  const onRightTouch = (e) => {
-    if (isTransitioning) return;
-    e.preventDefault();
-    goRight();
-  };
-
-  const onMouseDown = (e) => {
-    if (isTransitioning) return;
-    isDragging = true;
-    startX = e.clientX;
-  };
-
+  const onMouseDown = (e) => { if (!isTransitioning) { isDragging = true; startX = e.clientX; } };
   const onMouseUp = (e) => {
     if (!isDragging) return;
     const endX = e.clientX;
@@ -304,38 +312,27 @@ function initInterests(container) {
     else if (endX - startX > 10) goLeft();
     isDragging = false;
   };
-
-  const onMouseLeave = () => {
-    if (!isDragging) return;
-    isDragging = false;
-  };
-
-  const onTouchStart = (e) => {
-    startX = e.touches[0].clientX;
-  };
-
+  const onMouseLeave = () => { if (isDragging) isDragging = false; };
+  const onTouchStart = (e) => { startX = e.touches[0].clientX; };
   const onTouchEnd = (e) => {
     const endX = e.changedTouches[0].clientX;
     if (startX - endX > 10) goRight();
     else if (endX - startX > 10) goLeft();
   };
 
+  // --- Bind Events ---
   track.addEventListener('transitionend', onTransitionEnd);
-
   leftArrow.addEventListener('click', onLeftClick);
   rightArrow.addEventListener('click', onRightClick);
-
   leftArrow.addEventListener('touchstart', onLeftTouch, { passive: false });
   rightArrow.addEventListener('touchstart', onRightTouch, { passive: false });
-
   container.addEventListener('mousedown', onMouseDown);
   window.addEventListener('mouseup', onMouseUp);
   container.addEventListener('mouseleave', onMouseLeave);
-
-
   track.addEventListener('touchstart', onTouchStart, { passive: true });
   track.addEventListener('touchend', onTouchEnd);
 
+  // --- Arrow State ---
   const setArrows = (enabled) => {
     const pointerValue = enabled ? 'auto' : 'none';
     const opacityValue = enabled ? '1' : '0.5';
@@ -346,24 +343,20 @@ function initInterests(container) {
   };
   container._setArrows = setArrows;
 
+  // --- Cleanup ---
   container._carouselCleanup = () => {
     track.removeEventListener('transitionend', onTransitionEnd);
-
     leftArrow.removeEventListener('click', onLeftClick);
     rightArrow.removeEventListener('click', onRightClick);
-
-    leftArrow.removeEventListener('touchstart', onLeftTouch, { passive: false });
-    rightArrow.removeEventListener('touchstart', onRightTouch, { passive: false });
-
+    leftArrow.removeEventListener('touchstart', onLeftTouch);
+    rightArrow.removeEventListener('touchstart', onRightTouch);
     container.removeEventListener('mousedown', onMouseDown);
     window.removeEventListener('mouseup', onMouseUp);
     container.removeEventListener('mouseleave', onMouseLeave);
-
-    track.addEventListener('touchstart', onTouchStart, { passive: true });
-    track.addEventListener('touchend', onTouchEnd);
+    track.removeEventListener('touchstart', onTouchStart);
+    track.removeEventListener('touchend', onTouchEnd);
   };
 }
-
 
 // ==============================
 // Skills Visuals
@@ -399,10 +392,8 @@ function initSkills(container) {
       const relativeTop = rect.top - stackRect.top;
       const progress = 1 - Math.min(Math.max(relativeTop / stack.clientHeight, 0), 1);
 
-      // Apply the same opacity to the entire panel content
       panel.style.opacity = progress;
 
-      // Handle overlap with next panel
       const nextPanel = panels[index + 1];
       if (nextPanel) {
         const nextRect = nextPanel.getBoundingClientRect();
@@ -410,7 +401,6 @@ function initSkills(container) {
         const fadeAmount = Math.min(Math.max(overlap / panel.offsetHeight, 0), 1);
         const textOpacity = 1 - fadeAmount;
 
-        // Apply overlap fade uniformly to the whole panel
         panel.style.opacity = textOpacity;
       }
     });
@@ -449,7 +439,6 @@ function initTools(section) {
     const scrollY = scroller.scrollTop;
     const maxScroll = scroller.scrollHeight - scroller.clientHeight;
 
-    // --- arrow logic (same as initSkills) ---
     const threshold = 150;
     const atTop = scrollY < threshold;
     const atBottom = scrollY + scroller.clientHeight >= scroller.scrollHeight - threshold;
@@ -457,7 +446,6 @@ function initTools(section) {
     scrollDown.style.display = atTop ? "block" : "none";
     scrollUp.style.display = atBottom ? "block" : "none";
 
-    // --- card logic ---
     const segmentSize = maxScroll / (totalCards - 1);
     let segmentIndex = Math.floor(scrollY / segmentSize);
     segmentIndex = Math.max(0, Math.min(totalCards - 1, segmentIndex));
@@ -494,7 +482,6 @@ function initTools(section) {
     });
   }
 
-  // arrow click handlers
   scrollDown.classList.add("glow");
   scrollDown.addEventListener("click", () => {
     scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
