@@ -253,10 +253,11 @@
 }
 .card {
   position: fixed;
-  top: 28.5rem;
+  top: 50%;
   left: 50%;
   min-width: 100%;
   min-height: 90%;
+  margin-top: 1.5rem;
   padding: 3rem;
   border-left: var(--border);
   border-right: var(--border);
