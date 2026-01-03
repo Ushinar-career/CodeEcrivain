@@ -94,6 +94,7 @@
 .block {
   min-width: 100%;
   padding: 3rem;
+  background: var(--background-transparent);
   border-left: var(--border);
   border-right: var(--border);
   user-select: none;
@@ -164,7 +165,7 @@
     padding-top: 1rem;
   }
   .block {
-    padding: 0;
+    padding: 1rem;
   }
   .block-text.section-text-md {
     font-size: calc(var(--font-size-md) + 1rem);
