@@ -95,7 +95,8 @@ Contains copyright information.
 
 # Next Steps
 
-- [ ] Add Chat feature  
+- [ ] Add LLM change capacity - General & Thinking (Thinking content will appear in real time and accumulate dropdown section above ai response message which can be expanded to view full thought process.)
+- [ ] Add Projects section content 
 
 # Known Bugs
 

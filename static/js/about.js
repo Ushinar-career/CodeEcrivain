@@ -252,14 +252,14 @@ function initInterests(container) {
 
     dot.addEventListener('click', () => {
       if (isTransitioning) return;
-      index = i + 1; // +1 because of leading clone
+      index = i + 1;
       updatePosition();
     });
   }
 
   function updateDots() {
     dots.forEach(dot => dot.classList.remove('active'));
-    let logicalIndex = index - 1; // adjust for leading clone
+    let logicalIndex = index - 1;
     if (logicalIndex >= total) logicalIndex = 0;
     if (logicalIndex < 0) logicalIndex = total - 1;
     dots[logicalIndex].classList.add('active');
@@ -282,7 +282,7 @@ function initInterests(container) {
     scrollable.scrollTo({ top: 0, behavior: 'smooth' });
     requestAnimationFrame(() => {
       isTransitioning = false;
-      updateDots(); // 🔥 update dots here
+      updateDots();
     });
   };
 
