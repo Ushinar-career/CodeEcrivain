@@ -160,9 +160,11 @@
 /* ------------------------------------------- */
 /* Small screen styles */
 @media screen and (max-width: 600px) {
-  .interests-container,
+  .interests-container {
+    padding-top: 1rem;
+  }
   .block {
-    padding: 1rem;
+    padding: 0;
   }
   .block-text.section-text-md {
     font-size: calc(var(--font-size-md) + 1rem);
