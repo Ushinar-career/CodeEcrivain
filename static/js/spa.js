@@ -444,14 +444,6 @@ function initChat() {
     histories.slice().reverse().forEach(h => {
       const card = document.createElement("div");
       card.classList.add("history-card");
-      Object.assign(card.style, {
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "1rem",
-        alignItems: "center",
-        padding: "0.5rem",
-        borderBottom: "var(--border)"
-      });
       const left = document.createElement("div");
       left.style.flex = "1";
       left.innerHTML = `
@@ -587,7 +579,6 @@ function initChat() {
                 currentChat.push({ text: buffer, type: "ai" });
                 saveChatToHistory();
               }
-
               textarea.disabled = false;
               sendBtn.disabled = false;
               newIcon.disabled = false;
@@ -605,7 +596,6 @@ function initChat() {
               }
               return;
             }
-
 
             const chunk = decoder.decode(value, { stream: true });
             buffer += chunk;
@@ -637,7 +627,6 @@ function initChat() {
         appendMessage("<div style='color:red'>Error: No Server Running!</div>Please contact me to view a live demo.", "ai");
         saveChatToHistory();
 
-        // Re-enable controls
         textarea.disabled = false;
         sendBtn.disabled = false;
         newIcon.disabled = false;
@@ -660,12 +649,39 @@ function initChat() {
         const html = await (await fetch("static/content/chat.html")).text();
         chatContainer = new DOMParser().parseFromString(html, "text/html").body.firstChild;
         contentWrapper.appendChild(chatContainer);
+
         chatSection = chatContainer.querySelector(".chat-section");
         textarea = chatContainer.querySelector(".chat-container-input");
         sendBtn = chatContainer.querySelector(".send-icon");
         historyIcon = chatContainer.querySelector(".history-icon");
         historySection = chatContainer.querySelector(".history-section");
         newIcon = chatContainer.querySelector(".new-icon");
+
+        let scrollDownBtn = document.createElement("button");
+        scrollDownBtn.textContent = "arrow_circle_down";
+        scrollDownBtn.classList.add("material-icons", "scroll-down-btn");
+        scrollDownBtn.title = "Scroll to bottom";
+        chatContainer.appendChild(scrollDownBtn);
+
+        scrollDownBtn.onclick = () => {
+          chatSection.scrollTo({
+            top: chatSection.scrollHeight,
+            behavior: "smooth"
+          });
+          scrollDownBtn.classList.remove("visible");
+        };
+
+        const toggleScrollBtn = () => {
+          const threshold = 50;
+          const isAtBottom =
+            chatSection.scrollHeight - chatSection.scrollTop - chatSection.clientHeight < threshold;
+          if (isAtBottom) {
+            scrollDownBtn.classList.remove("visible");
+          } else {
+            scrollDownBtn.classList.add("visible");
+          }
+        };
+        chatSection.addEventListener("scroll", toggleScrollBtn);
 
         sendBtn.onclick = handleSend;
         textarea.onkeydown = e => {
@@ -678,7 +694,6 @@ function initChat() {
           historySection.classList.toggle("hidden");
           if (!historySection.classList.contains("hidden")) renderHistory();
         };
-
         newIcon.onclick = () => {
           saveChatToHistory();
           chatSection.innerHTML = "";
@@ -690,38 +705,42 @@ function initChat() {
           textarea.value = "";
           textarea.focus();
         };
+
         renderHistory();
       } catch (err) {
         console.error("Error loading chat.html:", err);
         return;
       }
     }
-    chatContainer.classList.toggle("hidden");
 
+    chatContainer.classList.toggle("hidden");
     if (firstOpen && !chatContainer.classList.contains("hidden")) {
       welcomeMsgEl = renderMessage(WELCOME_MESSAGE, "ai");
       firstOpen = false;
     }
-
     if (!chatContainer.classList.contains("hidden")) textarea.focus();
   });
 
   document.addEventListener("click", e => {
     chatContainer = document.querySelector(".chat-container");
     if (!chatContainer) return;
+
     historySection = chatContainer.querySelector(".history-section");
     historyIcon = chatContainer.querySelector(".history-icon");
+
     if (!chatContainer.classList.contains("hidden")) {
       if (!(chatContainer.contains(e.target) || chatIcon.contains(e.target))) {
         chatContainer.classList.add("hidden");
       }
     }
+
     if (historySection && !historySection.classList.contains("hidden")) {
       if (!(historySection.contains(e.target) || historyIcon.contains(e.target))) {
         historySection.classList.add("hidden");
       }
     }
   });
+
 }
 
 initChat();

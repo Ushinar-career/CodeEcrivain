@@ -4,6 +4,7 @@
   flex: 1;
   overflow: hidden;
 }
+
 .section-content {
   height: 100%;
   display: flex;
@@ -12,28 +13,32 @@
 }
 
 /* Sidebar Styling */
-/* Shared styles with sidebar.css - reused for Projects */ 
+/* Shared styles with sidebar.css - reused for Projects */
 
 /* Journey Styling */
 .journey-container {
   /* border: var(--border); */
   position: relative;
   overflow: auto;
-} 
+}
+
 .connector {
   position: absolute;
   width: 100%;
   height: 100%;
   pointer-events: none;
 }
+
 .steps-wrapper {
-  left: -2rem; /* To align with logo */
+  left: -2rem;
+  /* To align with logo */
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 9rem;
   padding-top: 0.5rem;
 }
+
 .journey-step {
   width: fit-content;
   max-width: 60%;
@@ -43,19 +48,23 @@
   border-radius: var(--radius-rounded);
   background: var(--background-transparent);
 }
+
 .journey-step:hover {
   border: var(--border-hover);
-}  
+}
+
 .journey-step,
 .journey-step * {
   cursor: grab;
 }
+
 .journey-step:active,
 .journey-step:active * {
   cursor: grabbing;
 }
+
 .journey-step .section-text-md {
-  animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
+  animation: colorswap var(--animation-fast) infinite alternate ease-in-out;
 }
 
 /* ------------------------------------------- */
@@ -65,6 +74,7 @@
     padding: 0.5rem;
     max-width: 50%;
   }
+
   .steps-wrapper {
     left: 0;
   }
@@ -76,21 +86,26 @@
   padding-top: 1rem;
   position: relative;
   overflow: hidden auto;
-  min-height: 100%;
+  height: 100%;
 }
+
 .interests-container::-webkit-scrollbar {
   display: none;
 }
+
 .carousel-track {
   display: flex;
-  min-height: 90%;
+  height: 100%;
 }
+
 .carousel-track * {
   cursor: grab;
 }
+
 .carousel-track:active * {
   cursor: grabbing;
 }
+
 .block {
   min-width: 100%;
   padding: 3rem;
@@ -104,19 +119,23 @@
   justify-content: center;
   text-align: center;
 }
+
 .quote-text {
   display: block;
-  animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
+  animation: colorswap var(--animation-fast) infinite alternate ease-in-out;
 }
+
 .block-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .block:hover {
   border-top: var(--border-hover);
   border-bottom: var(--border-hover);
 }
+
 .arrow-left,
 .arrow-right {
   position: fixed;
@@ -126,18 +145,22 @@
   animation: glowDimmed var(--animation-fast) ease-in-out infinite;
   z-index: 1;
 }
+
 .arrow-left {
   left: 0;
 }
+
 .arrow-right {
   right: 0;
 }
+
 .arrow-left:hover,
 .arrow-right:hover {
   background: none;
   animation: none;
   opacity: 1;
 }
+
 .carousel-dots {
   position: absolute;
   bottom: 10px;
@@ -145,7 +168,9 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
+  z-index: 100;
 }
+
 .dot {
   width: 10px;
   height: 10px;
@@ -154,6 +179,7 @@
   margin: 0 5px;
   cursor: pointer;
 }
+
 .dot.active {
   background: var(--primary-color);
 }
@@ -164,13 +190,16 @@
   .interests-container {
     padding-top: 1rem;
   }
+
   .block {
     padding: 1rem;
   }
+
   .block-text.section-text-md {
     font-size: calc(var(--font-size-md) + 1rem);
     margin-bottom: 3rem;
   }
+
   .block-text.section-text-base {
     font-size: calc(var(--font-size-base) + 1rem);
     line-height: 3rem !important;
@@ -179,19 +208,22 @@
 
 /* Skills Styling */
 .stack {
+  /* border: var(--border); */
   margin-top: 1rem;
-  min-width: 100%;
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
   align-self: center;
   overflow: auto;
 }
+
 .stack::-webkit-scrollbar {
   display: none;
 }
+
 .panel {
   position: sticky;
   top: 0;
-  min-height: 90%;
+  min-height: 100%;
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -202,13 +234,16 @@
   border-right: var(--border);
   background-color: var(--background-transparent);
 }
+
 .panel strong {
-  animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
+  animation: colorswap var(--animation-fast) infinite alternate ease-in-out;
 }
-.stack:hover .panel{
+
+.stack:hover .panel {
   border-top: var(--border-hover);
   border-bottom: var(--border-hover);
 }
+
 .scroll-down,
 .scroll-up {
   position: absolute;
@@ -220,6 +255,7 @@
   animation: glowDimmed var(--animation-fast) ease-in-out infinite;
   user-select: none;
 }
+
 .scroll-down:hover,
 .scroll-up:hover {
   animation: none;
@@ -235,57 +271,61 @@
 }
 
 /* Tools Styling */
-:root {
-  /* Progress variable (0 → 1) set per card via JS */
-  --p: 0;
-}
 .tools-container {
-  /* border: var(--border); */
+  width: 100%;
+  height: 100%;
+  margin-top: 1rem;
   position: relative;
-  flex: 1;
-  overflow-y: auto;   /* this is the scroller */
-}
-.tools-container::-webkit-scrollbar {
-  display: none;
-}
-.card-container {
-  position: relative;   /* instead of fixed */
-  overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
-}
-.card {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 90%;
-  margin-top: 1.5rem;
-  padding: 3rem;
-  border-left: var(--border);
-  border-right: var(--border);
-  background: var(--background-transparent);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  pointer-events: none;
+  overflow: hidden;
 }
-.card strong {
-  animation: colorswap var(--animation-fast) infinite alternate ease-in-out; 
+.scroll-driver {
+  flex: 1;
+  overflow-y: scroll;
+}
+.scroll-space {
+  height: 0;
+  /* JS will set dynamically */
+}
+.scroll-driver::-webkit-scrollbar,
+.tools-container::-webkit-scrollbar {
+  display: none;
 }
 .tools-container:hover .card {
   border-top: var(--border-hover);
   border-bottom: var(--border-hover);
 }
+.cards-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  padding: 3rem;
+  background: var(--background-transparent);
+  border-left: var(--border);
+  border-right: var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .card.is-current {
-  pointer-events: auto;
   opacity: calc(1 - var(--p));
-  transform: translate(-50%, -50%) scale(calc(1 + 1 * var(--p)));
+  transform: translate(-50%, -50%) scale(calc(1 + var(--p)));
 }
 .card.is-next {
-  pointer-events: auto;
   opacity: var(--p);
   transform: translate(-50%, -50%) scale(calc(0.5 + 0.5 * var(--p)));
 }
@@ -294,11 +334,12 @@
   transform: translate(-50%, -50%) scale(0.5);
 }
 .card.is-locked {
-  pointer-events: auto;
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
-
+.card strong {
+  animation: colorswap var(--animation-fast) infinite alternate ease-in-out;
+}
 /* ------------------------------------------- */
 /* Small screen styles */
 @media screen and (max-width: 600px) {

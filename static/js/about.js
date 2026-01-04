@@ -35,7 +35,7 @@ function initJourney(container) {
       path.setAttribute("stroke", "var(--primary-color)");
       path.setAttribute("fill", "transparent");
       path.setAttribute("stroke-width", "1");
-      path.setAttribute("d", `M${x1},${y1} C${x1},${(y1 + y2)/2} ${x2},${(y1 + y2)/2} ${x2},${y2}`);
+      path.setAttribute("d", `M${x1},${y1} C${x1},${(y1 + y2) / 2} ${x2},${(y1 + y2) / 2} ${x2},${y2}`);
       svg.appendChild(path);
     });
   }
@@ -191,7 +191,6 @@ function initInterests(container) {
 
   if (!track || !leftArrow || !rightArrow || !dotsContainer) return;
 
-  // Cleanup if already initialized
   if (container._carouselCleanup) {
     container._carouselCleanup();
     container._carouselCleanup = null;
@@ -206,7 +205,6 @@ function initInterests(container) {
   const total = originals.length;
   if (total === 0) return;
 
-  // Clone first and last for infinite loop
   const firstClone = originals[0].cloneNode(true);
   const lastClone = originals[total - 1].cloneNode(true);
   firstClone.dataset.clone = 'true';
@@ -240,7 +238,6 @@ function initInterests(container) {
   disableTransition();
   setTransform();
 
-  // --- DOTS ---
   dotsContainer.innerHTML = '';
   const dots = [];
   for (let i = 0; i < total; i++) {
@@ -265,7 +262,6 @@ function initInterests(container) {
     dots[logicalIndex].classList.add('active');
   }
 
-  // --- Transition End ---
   const onTransitionEnd = (e) => {
     if (e.propertyName && e.propertyName !== 'transform') return;
     if (index === 0) {
@@ -286,7 +282,6 @@ function initInterests(container) {
     });
   };
 
-  // --- Navigation ---
   const goLeft = () => {
     if (isTransitioning) return;
     index--;
@@ -298,7 +293,6 @@ function initInterests(container) {
     updatePosition();
   };
 
-  // --- Event Handlers ---
   const onLeftClick = () => goLeft();
   const onRightClick = () => goRight();
   const onLeftTouch = (e) => { if (!isTransitioning) { e.preventDefault(); goLeft(); } };
@@ -320,7 +314,6 @@ function initInterests(container) {
     else if (endX - startX > 10) goLeft();
   };
 
-  // --- Bind Events ---
   track.addEventListener('transitionend', onTransitionEnd);
   leftArrow.addEventListener('click', onLeftClick);
   rightArrow.addEventListener('click', onRightClick);
@@ -332,7 +325,6 @@ function initInterests(container) {
   track.addEventListener('touchstart', onTouchStart, { passive: true });
   track.addEventListener('touchend', onTouchEnd);
 
-  // --- Arrow State ---
   const setArrows = (enabled) => {
     const pointerValue = enabled ? 'auto' : 'none';
     const opacityValue = enabled ? '1' : '0.5';
@@ -343,7 +335,6 @@ function initInterests(container) {
   };
   container._setArrows = setArrows;
 
-  // --- Cleanup ---
   container._carouselCleanup = () => {
     track.removeEventListener('transitionend', onTransitionEnd);
     leftArrow.removeEventListener('click', onLeftClick);
@@ -419,17 +410,17 @@ function initSkills(container) {
 // Tools Visuals
 // ==============================
 function initTools(section) {
-  const scroller = section.querySelector('.tools-container');
+  const scroller = section.querySelector('.scroll-driver');
   const scrollSpace = scroller.querySelector('.scroll-space');
   const cards = Array.from(section.querySelectorAll('.card'));
   const totalCards = cards.length;
 
-  const scrollDown = section.querySelector('.scroll-down');
-  const scrollUp = section.querySelector('.scroll-up');
-
-  if (!scroller || !scrollSpace || !scrollDown || !scrollUp || totalCards === 0) return;
+  const arrowDown = section.querySelector('.scroll-down');
+  const arrowUp = section.querySelector('.scroll-up');
 
   const clamp01 = x => Math.max(0, Math.min(1, x));
+
+  const threshold = 90;
 
   function setScrollHeight() {
     scrollSpace.style.height = `${scroller.clientHeight * (totalCards - 1)}px`;
@@ -439,13 +430,6 @@ function initTools(section) {
     const scrollY = scroller.scrollTop;
     const maxScroll = scroller.scrollHeight - scroller.clientHeight;
 
-    const threshold = 150;
-    const atTop = scrollY < threshold;
-    const atBottom = scrollY + scroller.clientHeight >= scroller.scrollHeight - threshold;
-
-    scrollDown.style.display = atTop ? "block" : "none";
-    scrollUp.style.display = atBottom ? "block" : "none";
-
     const segmentSize = maxScroll / (totalCards - 1);
     let segmentIndex = Math.floor(scrollY / segmentSize);
     segmentIndex = Math.max(0, Math.min(totalCards - 1, segmentIndex));
@@ -454,7 +438,7 @@ function initTools(section) {
     const p = clamp01((scrollY - segmentStart) / segmentSize);
 
     cards.forEach(card => {
-      card.classList.remove('is-current','is-next','is-hidden','is-locked');
+      card.classList.remove('is-current', 'is-next', 'is-hidden', 'is-locked');
       card.style.setProperty('--p', 0);
     });
 
@@ -463,31 +447,40 @@ function initTools(section) {
         if (i === totalCards - 1) card.classList.add('is-locked');
         else card.classList.add('is-hidden');
       });
-      return;
+    } else {
+      const current = cards[segmentIndex];
+      const next = cards[segmentIndex + 1];
+
+      current.classList.add('is-current');
+      current.style.setProperty('--p', p);
+
+      if (next) {
+        next.classList.add('is-next');
+        next.style.setProperty('--p', p);
+      }
+
+      cards.forEach(card => {
+        if (card !== current && card !== next) card.classList.add('is-hidden');
+      });
     }
 
-    const current = cards[segmentIndex];
-    const next = cards[segmentIndex + 1];
-
-    current.classList.add('is-current');
-    current.style.setProperty('--p', p);
-
-    if (next) {
-      next.classList.add('is-next');
-      next.style.setProperty('--p', p);
+    if (scrollY <= threshold) {
+      arrowDown.style.display = 'block';
+      arrowUp.style.display = 'none';
+    } else if (scrollY >= maxScroll - threshold) {
+      arrowDown.style.display = 'none';
+      arrowUp.style.display = 'block';
+    } else {
+      arrowDown.style.display = 'none';
+      arrowUp.style.display = 'none';
     }
-
-    cards.forEach(card => {
-      if (card !== current && card !== next) card.classList.add('is-hidden');
-    });
   }
 
-  scrollDown.classList.add("glow");
-  scrollDown.addEventListener("click", () => {
-    scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
+  arrowDown.addEventListener('click', () => {
+    scroller.scrollTo({ top: scroller.scrollHeight, behavior: 'smooth' });
   });
-  scrollUp.addEventListener("click", () => {
-    scroller.scrollTo({ top: 0, behavior: "smooth" });
+  arrowUp.addEventListener('click', () => {
+    scroller.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   scroller.addEventListener('scroll', update);
@@ -496,17 +489,12 @@ function initTools(section) {
     update();
   });
 
-  cards.forEach(card => {
-    card.addEventListener('wheel', e => {
-      scroller.scrollTop += e.deltaY;
-    }, { passive: true });
-  });
-
   setScrollHeight();
-  scroller.scrollTo({ top: 0, behavior: "smooth" });
+  scroller.scrollTo({ top: 0, behavior: 'smooth' });
   cards.forEach(card => card.classList.add('is-hidden'));
   cards[0].classList.remove('is-hidden');
   cards[0].classList.add('is-current');
   cards[0].style.setProperty('--p', 0);
   update();
 }
+
