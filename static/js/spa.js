@@ -379,7 +379,7 @@ function initChat() {
 <div style="display:flex;flex-direction:column;gap:1rem;justify-content:center;align-items:center;text-align:center;">
     <h1><strong style="animation: colorswap var(--animation-fast) infinite alternate ease-in-out;">Welcome!</strong></h1>
     <p>I am <strong>MYA</strong>, your virtual AI assistant here to help with professional questions about <strong>Ushinar</strong> and the content on <strong>CodeEcrivain</strong>.</p>
-    <i style="font-size:var(--font-size-sm);"><strong>MYA</strong> is an AI and may occasionally make mistakes.<br>All conversations are stored locally in your browser and can be deleted anytime.</i>
+    <i style="font-size:var(--font-size-sm); animation: colorswap var(--animation-fast) infinite alternate ease-in-out;"><strong>MYA</strong> is an AI and may occasionally make mistakes.<br>All conversations are stored locally in your browser and can be deleted anytime.</i>
     <strong>Contact me to explore a live demo.</strong>
 </div>
   `;
@@ -704,6 +704,7 @@ function initChat() {
           welcomeMsgEl = renderMessage(WELCOME_MESSAGE, "ai");
           textarea.value = "";
           textarea.focus();
+          scrollDownBtn.classList.remove("visible");
         };
 
         renderHistory();
