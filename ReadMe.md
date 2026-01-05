@@ -16,13 +16,11 @@ This page guides users of [**CodeÉcrivain**](https://ushinar-career.github.io/C
 │   ├── audio/
 │   │   └── background-music.mp3
 │   ├── fonts/
-│   │   └── fonts.woff2
+│   │   └── fonts_local.woff2
 │   ├── images/
 │   │   ├── clouds_lq.jpg
 │   │   ├── earth_logo_hq.png
 │   │   ├── earth_logo_lq.png
-│   │   ├── favicon.png
-│   │   ├── landing_page.png
 │   │   ├── profile_picture_hq.png
 │   │   ├── profile_picture_lq.png
 │   │   └── stars_lq.jpg
@@ -31,28 +29,29 @@ This page guides users of [**CodeÉcrivain**](https://ushinar-career.github.io/C
 │       └── stars_hq.mp4
 ├── files/
 │   └── resume.pdf
+├── help.html
 ├── index.html
 ├── spa.html
 ├── static/
 │   ├── content/
 │   │   ├── about.html
+│   │   ├── chat.html
 │   │   ├── contact.html
 │   │   ├── home.html
 │   │   └── projects.html
 │   ├── css/
 │   │   ├── about.css
-│   │   ├── contact.css
-│   │   ├── main.css
+│   │   ├── help.css
 │   │   ├── projects.css
-│   │   └── sidebar.css
+│   │   ├── sidebar.css
+│   │   └── spa.css
 │   └── js/
 │       ├── about.js
-│       ├── contact.js
-│       ├── global-cursor.js
-│       ├── main.js
+│       ├── marked.min.js
 │       ├── projects.js
-│       └── sidebar.js
-
+│       ├── sidebar.js
+│       ├── spa.js
+│       └── utils.js
 
 ```
 
@@ -95,7 +94,7 @@ Contains copyright information.
 
 # Next Steps
 
-- [ ] Add copy icon to chat messages - 
+- [ ] Add copy icon to chat messages
 - [ ] Add LLM change capacity - General & Thinking (Thinking content will appear in real time and accumulate dropdown section above ai response message which can be expanded to view full thought process.)
 - [ ] Add Projects 
 
