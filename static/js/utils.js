@@ -220,20 +220,27 @@ initLivingCursor();
 // ==============================
 // Global Loader Logic
 // ==============================
-function showLoader(loaderSelector = '.global-loader', appSelector = '.app-container') {
-  const loader = document.querySelector(loaderSelector);
-  const app = document.querySelector(appSelector);
-
-  if (loader) loader.classList.remove('hidden');
-  if (app) app.classList.add('hidden');
+function showGlobalLoader(loaderEl, appEl) {
+  if (loaderEl) loaderEl.classList.remove('hidden');
+  if (appEl) appEl.classList.add('hidden');
 }
 
-function hideLoader(loaderSelector = '.global-loader', appSelector = '.app-container') {
-  const loader = document.querySelector(loaderSelector);
-  const app = document.querySelector(appSelector);
+function hideGlobalLoader(loaderEl, appEl) {
+  if (loaderEl) loaderEl.classList.add('hidden');
+  if (appEl) appEl.classList.remove('hidden');
+}
 
-  if (loader) loader.classList.add('hidden');
-  if (app) app.classList.remove('hidden');
+// ==============================
+// Section Loader Logic
+// ==============================
+function showSectionLoader(loaderEl, sectionEl) {
+  if (loaderEl) loaderEl.classList.remove('hidden');
+  if (sectionEl) sectionEl.classList.remove('active');
+}
+
+function hideSectionLoader(loaderEl, sectionEl) {
+  if (loaderEl) loaderEl.classList.add('hidden');
+  if (sectionEl) sectionEl.classList.add('active');
 }
 
 // ==============================
@@ -291,14 +298,9 @@ function initHeightGuard(container, options = {}) {
 function initHelp() {
   const helpBtn = document.querySelector(".help-btn");
   helpBtn.addEventListener("click", () => {
-    // Open help.html from static/content/
     window.open("help.html", "_blank");
   });
 }
 
-// Initialize
 initHelp();
-
-
-
 

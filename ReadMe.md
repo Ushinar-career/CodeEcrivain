@@ -94,8 +94,9 @@ Contains copyright information.
 
 # Next Steps
 
-- [ ] Add copy icon to chat messages
+- [ ] Add model selection
 - [ ] Add LLM change capacity - General & Thinking (Thinking content will appear in real time and accumulate dropdown section above ai response message which can be expanded to view full thought process.)
+- [ ] Add copy icon to chat messages
 - [ ] Add Projects 
 
 # Known Bugs

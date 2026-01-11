@@ -1,11 +1,14 @@
 // ==============================
 // App Loading Logic
 // ==============================
-function initAppLoader() {
+function initApp() {
   const darkVideo = document.querySelector('.dark-video');
   const profileImg = document.querySelector('.profile-photo');
   const logoImg = document.querySelector('.logo');
-  const wrapper = document.querySelector(".content-wrapper");
+  const wrapper = document.querySelector('.content-wrapper');
+
+  const globalLoaderEl = document.querySelector('.global-loader');
+  const appContainerEl = document.querySelector('.app-container');
 
   const hqAssets = {
     videoSrc: 'assets/videos/stars_hq.mp4',
@@ -15,7 +18,8 @@ function initAppLoader() {
 
   document.addEventListener('DOMContentLoaded', () => {
     initHeightGuard(wrapper, 400);
-    showLoader();
+
+    showGlobalLoader(globalLoaderEl, appContainerEl);
 
     const posterSrc = darkVideo?.getAttribute('poster');
     if (!posterSrc) {
@@ -27,7 +31,7 @@ function initAppLoader() {
     poster.src = posterSrc;
 
     poster.onload = () => {
-      hideLoader();
+      hideGlobalLoader(globalLoaderEl, appContainerEl);
 
       const hqProfile = new Image();
       hqProfile.src = hqAssets.profileSrc;
@@ -61,7 +65,7 @@ function initAppLoader() {
   });
 }
 
-initAppLoader();
+initApp();
 
 // ==============================
 // Theme Toggle Logic
@@ -204,9 +208,9 @@ initImagePopup();
 function initNavigation() {
   const navLinks = Array.from(document.querySelectorAll('.nav-link'));
   const sectionElements = Array.from(document.querySelectorAll('.content-section'));
-  const loader = document.querySelector('.section-loader');
+  const sectionLoaderEl = document.querySelector('.section-loader'); // constant reference
 
-  if (!navLinks.length || !sectionElements.length || !loader) return;
+  if (!navLinks.length || !sectionElements.length || !sectionLoaderEl) return;
 
   const htmlCache = {};
   const loadedAssets = new Set();
@@ -261,15 +265,13 @@ function initNavigation() {
 
     if (loadingSections.has(section)) {
       if (showLoader && !edge) {
-        loader.classList.remove('hidden');
-        sectionEl.classList.remove('active');
+        showSectionLoader(sectionLoaderEl, sectionEl);
       }
 
       await loadingSections.get(section);
 
       if (showLoader && !edge) {
-        loader.classList.add('hidden');
-        sectionEl.classList.add('active');
+        hideSectionLoader(sectionLoaderEl, sectionEl);
       }
       return;
     }
@@ -277,8 +279,7 @@ function initNavigation() {
     const loadPromise = (async () => {
       try {
         if (showLoader && !edge) {
-          loader.classList.remove('hidden');
-          sectionEl.classList.remove('active');
+          showSectionLoader(sectionLoaderEl, sectionEl);
         }
 
         if (!edge) await loadAssets(section, sectionEl);
@@ -299,8 +300,7 @@ function initNavigation() {
         console.error(`Failed to load content for "${section}"`, err);
       } finally {
         if (showLoader && !edge) {
-          loader.classList.add('hidden');
-          sectionEl.classList.add('active');
+          hideSectionLoader(sectionLoaderEl, sectionEl);
         }
         loadingSections.delete(section);
       }
@@ -361,387 +361,3 @@ function initNavigation() {
 }
 
 initNavigation();
-
-// ==============================
-// Chat Logic
-// ==============================
-function initChat() {
-  const chatIcon = document.querySelector(".chat-icon");
-  const contentWrapper = document.querySelector(".app-container");
-  let chatContainer, chatSection, textarea, sendBtn, historyIcon, historySection, newIcon, warningEl;
-  let currentChat = [], currentChatId = null;
-  let firstOpen = true;
-  let welcomeMsgEl = null;
-  let requestCount = 0;
-  const MAX_REQUESTS = 3;
-
-  const WELCOME_MESSAGE = `
-<div style="display:flex;flex-direction:column;gap:1rem;justify-content:center;align-items:center;text-align:center;">
-    <h1><strong style="animation: colorswap var(--animation-fast) infinite alternate ease-in-out;">Welcome!</strong></h1>
-    <p>I am <strong>MYA</strong>, your virtual AI assistant here to help with professional questions about <strong>Ushinar</strong> and the content on <strong>CodeEcrivain</strong>.</p>
-    <i style="font-size:var(--font-size-sm); animation: colorswap var(--animation-fast) infinite alternate ease-in-out;"><strong>MYA</strong> is an AI and may occasionally make mistakes.<br>All conversations are stored locally in your browser and can be deleted anytime.</i>
-    <strong>Contact me to explore a live demo.</strong>
-</div>
-  `;
-  let thinkingEl = null;
-
-  const showThinking = () => {
-    if (thinkingEl) return;
-    thinkingEl = renderMessage("<span class='thinking-inline'>Thinking <span class='dots'></span></span>", "ai");
-
-    chatSection.appendChild(thinkingEl);
-
-    chatSection.scrollTop = chatSection.scrollHeight;
-  };
-
-  const removeThinking = () => {
-    if (thinkingEl && chatSection.contains(thinkingEl)) {
-      thinkingEl.remove();
-    }
-    thinkingEl = null;
-  };
-
-  const renderMessage = (text, type) => {
-    const msg = document.createElement("div");
-    msg.classList.add("message", type);
-    msg.innerHTML = type === "ai" ? marked.parse(text) : text;
-    chatSection.appendChild(msg);
-    chatSection.scrollTop = chatSection.scrollHeight;
-    return msg;
-  };
-
-  const appendMessage = (text, type) => {
-    renderMessage(text, type);
-    currentChat.push({ text, type });
-  };
-
-  const saveChatToHistory = () => {
-    if (!currentChat.length) return;
-    const histories = JSON.parse(localStorage.getItem("chatHistories") || "[]");
-    if (currentChatId) {
-      const idx = histories.findIndex(h => h.id === currentChatId);
-      if (idx !== -1) {
-        histories[idx].chatData = currentChat;
-        localStorage.setItem("chatHistories", JSON.stringify(histories));
-        return;
-      }
-    }
-    const newHistory = {
-      id: Date.now(),
-      firstMessage: currentChat[0].text,
-      timestamp: new Date().toLocaleString(),
-      chatData: currentChat
-    };
-    histories.push(newHistory);
-    currentChatId = newHistory.id;
-    localStorage.setItem("chatHistories", JSON.stringify(histories));
-    renderHistory();
-  };
-
-  const renderHistory = () => {
-    const histories = JSON.parse(localStorage.getItem("chatHistories") || "[]");
-    historySection.innerHTML = histories.length ? "" : "<p class=\"section-text-base\">No history yet.</p>";
-    histories.slice().reverse().forEach(h => {
-      const card = document.createElement("div");
-      card.classList.add("history-card");
-      const left = document.createElement("div");
-      left.style.flex = "1";
-      left.innerHTML = `
-        <div class="history-title section-text-base" style="cursor:pointer; color:var(--hover-color);">
-          ${h.firstMessage.length > 30 ? h.firstMessage.slice(0, 30) + "..." : h.firstMessage}
-        </div>
-        <div class="history-time section-text-sm" style="cursor:pointer; color:var(--primary-color);">
-          Started: ${h.timestamp}
-        </div>`;
-      left.onclick = () => {
-        saveChatToHistory();
-        chatSection.innerHTML = "";
-        welcomeMsgEl = null;
-        currentChat = [...h.chatData];
-        currentChatId = h.id;
-        currentChat.forEach(msg => renderMessage(msg.text, msg.type));
-        historySection.classList.add("hidden");
-
-        requestCount = currentChat.filter(m => m.type === "user").length;
-
-        if (requestCount >= MAX_REQUESTS) {
-          showWarning();
-        } else {
-          clearWarning();
-          textarea.focus();
-        }
-      };
-
-      const removeBtn = document.createElement("span");
-      removeBtn.textContent = "✖";
-      Object.assign(removeBtn.style, { color: "red", cursor: "pointer" });
-      removeBtn.onclick = e => {
-        e.stopPropagation();
-        localStorage.setItem("chatHistories", JSON.stringify(histories.filter(x => x.id !== h.id)));
-        renderHistory();
-      };
-      card.append(left, removeBtn);
-      historySection.appendChild(card);
-    });
-  };
-
-  const showWarning = () => {
-    if (!warningEl) {
-      warningEl = document.createElement("div");
-      warningEl.textContent = `⚠️ Demo limit reached. Please start a new chat.`;
-      Object.assign(warningEl.style, {
-        background: "black",
-        padding: "1rem",
-        border: "var(--border)",
-        borderRadius: "var(--radius-rounded)",
-        color: "red",
-        textAlign: "center",
-        fontWeight: "bold",
-        position: "absolute",
-        bottom: "1rem",
-        right: "1rem"
-
-      });
-      textarea.parentNode.insertBefore(warningEl, textarea);
-    }
-    textarea.disabled = true;
-    textarea.placeholder = "";
-    sendBtn.disabled = true;
-  };
-
-  const clearWarning = () => {
-    if (warningEl) {
-      warningEl.remove();
-      warningEl = null;
-    }
-    textarea.disabled = false;
-    textarea.placeholder = "Enter your query...";
-    sendBtn.disabled = false;
-  };
-
-  const handleSend = () => {
-    const text = textarea.value.trim();
-    if (!text) return;
-
-    if (requestCount >= MAX_REQUESTS) {
-      showWarning();
-      return;
-    }
-
-    if (welcomeMsgEl && chatSection.contains(welcomeMsgEl)) {
-      chatSection.removeChild(welcomeMsgEl);
-      welcomeMsgEl = null;
-    }
-
-    appendMessage(text, "user");
-    textarea.value = "";
-    showThinking();
-
-    textarea.disabled = true;
-    sendBtn.disabled = true;
-    newIcon.disabled = true;
-    historyIcon.disabled = true;
-    textarea.placeholder = " ";
-    textarea.classList.add("dimmed");
-    sendBtn.classList.add("dimmed");
-    newIcon.classList.add("dimmed");
-    historyIcon.classList.add("dimmed");
-
-    requestCount++;
-
-    const messages = currentChat.map(m => ({
-      role: m.type === "user" ? "user" : "ai",
-      content: m.text
-    }));
-
-    fetch("http://localhost:5000/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages })
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("Server not available");
-
-        const reader = res.body.getReader();
-        let aiMsgEl = renderMessage("", "ai");
-        let decoder = new TextDecoder();
-        let buffer = "";
-        let hasStarted = false;
-
-        function read() {
-          reader.read().then(({ done, value }) => {
-            if (done) {
-              removeThinking();
-
-              if (!buffer.trim()) {
-                aiMsgEl.innerHTML = "<div style='color:red'>Error: LLM not responding!</div>";
-              } else {
-                currentChat.push({ text: buffer, type: "ai" });
-                saveChatToHistory();
-              }
-              textarea.disabled = false;
-              sendBtn.disabled = false;
-              newIcon.disabled = false;
-              historyIcon.disabled = false;
-              textarea.placeholder = "Enter your query...";
-              textarea.classList.remove("dimmed");
-              sendBtn.classList.remove("dimmed");
-              newIcon.classList.remove("dimmed");
-              historyIcon.classList.remove("dimmed");
-
-              textarea.focus();
-
-              if (requestCount >= MAX_REQUESTS) {
-                showWarning();
-              }
-              return;
-            }
-
-            const chunk = decoder.decode(value, { stream: true });
-            buffer += chunk;
-
-            if (!hasStarted) {
-              removeThinking();
-              hasStarted = true;
-            }
-
-            aiMsgEl.innerHTML = marked.parse(buffer);
-
-            const threshold = 90;
-            const isAtBottom =
-              chatSection.scrollHeight - chatSection.scrollTop - chatSection.clientHeight < threshold;
-
-            if (isAtBottom) {
-              chatSection.scrollTop = chatSection.scrollHeight;
-            }
-
-            read();
-          });
-        }
-
-        read();
-      })
-
-      .catch(err => {
-        console.error("Chat backend error:", err);
-        appendMessage("<div style='color:red'>Error: No Server Running!</div>Please contact me to view a live demo.", "ai");
-        saveChatToHistory();
-
-        textarea.disabled = false;
-        sendBtn.disabled = false;
-        newIcon.disabled = false;
-        historyIcon.disabled = false;
-        textarea.placeholder = "Enter your query...";
-        textarea.classList.remove("dimmed");
-        sendBtn.classList.remove("dimmed");
-        newIcon.classList.remove("dimmed");
-        historyIcon.classList.remove("dimmed");
-
-        textarea.focus();
-        removeThinking();
-      });
-  };
-
-  chatIcon.addEventListener("click", async () => {
-    chatContainer = document.querySelector(".chat-container");
-    if (!chatContainer) {
-      try {
-        const html = await (await fetch("static/content/chat.html")).text();
-        chatContainer = new DOMParser().parseFromString(html, "text/html").body.firstChild;
-        contentWrapper.appendChild(chatContainer);
-
-        chatSection = chatContainer.querySelector(".chat-section");
-        textarea = chatContainer.querySelector(".chat-container-input");
-        sendBtn = chatContainer.querySelector(".send-icon");
-        historyIcon = chatContainer.querySelector(".history-icon");
-        historySection = chatContainer.querySelector(".history-section");
-        newIcon = chatContainer.querySelector(".new-icon");
-
-        let scrollDownBtn = document.createElement("button");
-        scrollDownBtn.textContent = "arrow_circle_down";
-        scrollDownBtn.classList.add("material-icons", "scroll-down-btn");
-        scrollDownBtn.title = "Scroll to bottom";
-        chatContainer.appendChild(scrollDownBtn);
-
-        scrollDownBtn.onclick = () => {
-          chatSection.scrollTo({
-            top: chatSection.scrollHeight,
-            behavior: "smooth"
-          });
-          scrollDownBtn.classList.remove("visible");
-        };
-
-        const toggleScrollBtn = () => {
-          const threshold = 50;
-          const isAtBottom =
-            chatSection.scrollHeight - chatSection.scrollTop - chatSection.clientHeight < threshold;
-          if (isAtBottom) {
-            scrollDownBtn.classList.remove("visible");
-          } else {
-            scrollDownBtn.classList.add("visible");
-          }
-        };
-        chatSection.addEventListener("scroll", toggleScrollBtn);
-
-        sendBtn.onclick = handleSend;
-        textarea.onkeydown = e => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-          }
-        };
-        historyIcon.onclick = () => {
-          historySection.classList.toggle("hidden");
-          if (!historySection.classList.contains("hidden")) renderHistory();
-        };
-        newIcon.onclick = () => {
-          saveChatToHistory();
-          chatSection.innerHTML = "";
-          currentChat = [];
-          currentChatId = null;
-          requestCount = 0;
-          clearWarning();
-          welcomeMsgEl = renderMessage(WELCOME_MESSAGE, "ai");
-          textarea.value = "";
-          textarea.focus();
-          scrollDownBtn.classList.remove("visible");
-        };
-
-        renderHistory();
-      } catch (err) {
-        console.error("Error loading chat.html:", err);
-        return;
-      }
-    }
-
-    chatContainer.classList.toggle("hidden");
-    if (firstOpen && !chatContainer.classList.contains("hidden")) {
-      welcomeMsgEl = renderMessage(WELCOME_MESSAGE, "ai");
-      firstOpen = false;
-    }
-    if (!chatContainer.classList.contains("hidden")) textarea.focus();
-  });
-
-  document.addEventListener("click", e => {
-    chatContainer = document.querySelector(".chat-container");
-    if (!chatContainer) return;
-
-    historySection = chatContainer.querySelector(".history-section");
-    historyIcon = chatContainer.querySelector(".history-icon");
-
-    if (!chatContainer.classList.contains("hidden")) {
-      if (!(chatContainer.contains(e.target) || chatIcon.contains(e.target))) {
-        chatContainer.classList.add("hidden");
-      }
-    }
-
-    if (historySection && !historySection.classList.contains("hidden")) {
-      if (!(historySection.contains(e.target) || historyIcon.contains(e.target))) {
-        historySection.classList.add("hidden");
-      }
-    }
-  });
-
-}
-
-initChat();
