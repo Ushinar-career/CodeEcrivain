@@ -175,20 +175,6 @@ body {
   background: var(--primary-color);
 }
 
-/* Global Content Section Styling */
-.main-section-container {
-  /* border: var(--border); */
-  flex: 1;
-  overflow: hidden;
-}
-
-.main-section-container-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
 /* Font Styling */
 @font-face {
   font-family: 'Material Icons';
@@ -460,7 +446,7 @@ ul {
 /* Section Loader Styling */
 .main-section-loader {
   /* border: var(--border); */
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -527,13 +513,22 @@ ul {
   border: var(--border-hover);
 }
 
+.main-section-container {
+  /* border: var(--border); */
+  flex: 1;
+  overflow: hidden;
+}
+
 .main-section-container-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(10px);
   pointer-events: none;
   transition: opacity 1s ease, transform 1s ease;
 }
-
 .main-section-container-content.active {
   opacity: 1;
   transform: translateY(0);

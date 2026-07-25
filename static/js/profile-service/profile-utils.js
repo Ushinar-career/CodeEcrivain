@@ -1,3 +1,5 @@
+import { showSectionLoader, hideSectionLoader } from "../utils/utils.js";
+
 // ==============================
 // Profile Renderer
 // ==============================
