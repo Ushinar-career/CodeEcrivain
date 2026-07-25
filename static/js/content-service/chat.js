@@ -4,11 +4,10 @@
 // ==============================
 function initChat() {
   const chatIcon = document.querySelector(".chat-icon");
-  const contentWrapper = document.querySelector(".app-container");
-  let chatContainer, chatSection, textarea, sendBtn, historyIcon, historySection, newIcon, warningEl;
+  const contentWrapper = document.querySelector(".code-ecrivain");
+  let chatContainer, messagesSection, textarea, sendBtn, historyIcon, historySection, newIcon, warningEl;
   let currentChat = [], currentChatId = null;
   let firstOpen = true;
-  let welcomeMsgEl = null;
   let requestCount = 0;
   const MAX_REQUESTS = 3;
   let thinkingEl = null;
@@ -18,13 +17,13 @@ function initChat() {
     if (thinkingEl) return;
     thinkingEl = renderMessage("<span class='thinking-inline'>Thinking <span class='dots'></span></span>", "ai");
 
-    chatSection.appendChild(thinkingEl);
+    messagesSection.appendChild(thinkingEl);
 
-    chatSection.scrollTop = chatSection.scrollHeight;
+    messagesSection.scrollTop = messagesSection.scrollHeight;
   };
 
   const removeThinking = () => {
-    if (thinkingEl && chatSection.contains(thinkingEl)) {
+    if (thinkingEl && messagesSection.contains(thinkingEl)) {
       thinkingEl.remove();
     }
     thinkingEl = null;
@@ -34,8 +33,8 @@ function initChat() {
     const msg = document.createElement("div");
     msg.classList.add("message", type);
     msg.innerHTML = type === "ai" ? marked.parse(text) : text;
-    chatSection.appendChild(msg);
-    chatSection.scrollTop = chatSection.scrollHeight;
+    messagesSection.appendChild(msg);
+    messagesSection.scrollTop = messagesSection.scrollHeight;
     return msg;
   };
 
@@ -69,22 +68,22 @@ function initChat() {
 
   const renderHistory = () => {
     const histories = JSON.parse(localStorage.getItem("chatHistories") || "[]");
-    historySection.innerHTML = histories.length ? "" : "<p class=\"section-text-base\">No history yet.</p>";
+    historySection.innerHTML = histories.length ? "" : '<p class="global-text-base" style="padding:1rem;">No history yet.</p>';
     histories.slice().reverse().forEach(h => {
       const card = document.createElement("div");
       card.classList.add("history-card");
       const left = document.createElement("div");
       left.style.flex = "1";
       left.innerHTML = `
-        <div class="history-title section-text-base" style="cursor:pointer; color:var(--hover-color);">
+        <div class="history-title global-text-base" style="cursor:pointer; color:var(--hover-color);">
           ${h.firstMessage.length > 30 ? h.firstMessage.slice(0, 30) + "..." : h.firstMessage}
         </div>
-        <div class="history-time section-text-sm" style="cursor:pointer; color:var(--primary-color);">
+        <div class="history-time" style="cursor:pointer; color:var(--primary-color);">
           Started: ${h.timestamp}
         </div>`;
       left.onclick = () => {
         saveChatToHistory();
-        chatSection.innerHTML = "";
+        messagesSection.innerHTML = "";
         welcomeMsgEl = null;
         currentChat = [...h.chatData];
         currentChatId = h.id;
@@ -185,8 +184,9 @@ function initChat() {
       role: m.type === "user" ? "user" : "ai",
       content: m.text
     }));
+    console.log(messages)
 
-    fetch("http://localhost:5000/chat", {
+    fetch("http://127.0.0.1:5000/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages })
@@ -241,10 +241,10 @@ function initChat() {
 
             const threshold = 60;
             const isAtBottom =
-              chatSection.scrollHeight - chatSection.scrollTop - chatSection.clientHeight < threshold;
+              messagesSection.scrollHeight - messagesSection.scrollTop - messagesSection.clientHeight < threshold;
 
             if (isAtBottom) {
-              chatSection.scrollTop = chatSection.scrollHeight;
+              messagesSection.scrollTop = messagesSection.scrollHeight;
             }
 
             read();
@@ -282,11 +282,11 @@ function initChat() {
         chatContainer = new DOMParser().parseFromString(html, "text/html").body.firstChild;
         contentWrapper.appendChild(chatContainer);
 
-        chatSection = chatContainer.querySelector(".chat-section");
+        messagesSection = chatContainer.querySelector(".chat-container-messages-section");
         textarea = chatContainer.querySelector(".chat-container-input");
         sendBtn = chatContainer.querySelector(".send-icon");
         historyIcon = chatContainer.querySelector(".history-icon");
-        historySection = chatContainer.querySelector(".history-section");
+        historySection = chatContainer.querySelector(".chat-history-container");
         newIcon = chatContainer.querySelector(".new-icon");
 
         let scrollDownBtn = document.createElement("button");
@@ -294,11 +294,11 @@ function initChat() {
         scrollDownBtn.classList.add("material-icons", "scroll-down-btn");
         scrollDownBtn.title = "Scroll to bottom";
         chatContainer.appendChild(scrollDownBtn);
-        welcomeScreen = chatContainer.querySelector(".welcome-screen");
+        welcomeScreen = chatContainer.querySelector(".chat-container-messages-section-welcome-screen");
 
         scrollDownBtn.onclick = () => {
-          chatSection.scrollTo({
-            top: chatSection.scrollHeight,
+          messagesSection.scrollTo({
+            top: messagesSection.scrollHeight,
             behavior: "smooth"
           });
           scrollDownBtn.classList.remove("visible");
@@ -307,14 +307,14 @@ function initChat() {
         const toggleScrollBtn = () => {
           const threshold = 50;
           const isAtBottom =
-            chatSection.scrollHeight - chatSection.scrollTop - chatSection.clientHeight < threshold;
+            messagesSection.scrollHeight - messagesSection.scrollTop - messagesSection.clientHeight < threshold;
           if (isAtBottom) {
             scrollDownBtn.classList.remove("visible");
           } else {
             scrollDownBtn.classList.add("visible");
           }
         };
-        chatSection.addEventListener("scroll", toggleScrollBtn);
+        messagesSection.addEventListener("scroll", toggleScrollBtn);
 
         sendBtn.onclick = handleSend;
         textarea.onkeydown = e => {
@@ -329,8 +329,8 @@ function initChat() {
         };
         newIcon.onclick = () => {
           saveChatToHistory();
-          chatSection.innerHTML = "";
-          chatSection.appendChild(welcomeScreen);
+          messagesSection.innerHTML = "";
+          messagesSection.appendChild(welcomeScreen);
           showWelcome();
           currentChat = [];
           currentChatId = null;
@@ -360,7 +360,6 @@ function initChat() {
     chatContainer = document.querySelector(".chat-container");
     if (!chatContainer) return;
 
-    historySection = chatContainer.querySelector(".history-section");
     historyIcon = chatContainer.querySelector(".history-icon");
 
     if (!chatContainer.classList.contains("hidden")) {

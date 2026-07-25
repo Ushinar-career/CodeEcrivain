@@ -12,48 +12,12 @@ This page guides users of [**CodeÉcrivain**](https://ushinar-career.github.io/C
 📁 Folder: CodeÉcrivain
 
 ├── ReadMe.md
-├── assets/
-│   ├── audio/
-│   │   └── background-music.mp3
-│   ├── fonts/
-│   │   └── fonts_local.woff2
-│   ├── images/
-│   │   ├── clouds_lq.jpg
-│   │   ├── earth_logo_hq.png
-│   │   ├── earth_logo_lq.png
-│   │   ├── profile_picture_hq.png
-│   │   ├── profile_picture_lq.png
-│   │   └── stars_lq.jpg
-│   └── videos/
-│       ├── clouds_hq.mp4
-│       └── stars_hq.mp4
-├── files/
-│   └── resume.pdf
-├── help.html
-├── index.html
-├── spa.html
-├── static/
-│   ├── content/
-│   │   ├── about.html
-│   │   ├── chat.html
-│   │   ├── contact.html
-│   │   ├── home.html
-│   │   └── projects.html
-│   ├── css/
-│   │   ├── about.css
-│   │   ├── help.css
-│   │   ├── projects.css
-│   │   ├── sidebar.css
-│   │   └── spa.css
-│   └── js/
-│       ├── about.js
-│       ├── marked.min.js
-│       ├── projects.js
-│       ├── sidebar.js
-│       ├── spa.js
-│       └── utils.js
 
 ```
+# Technologies Used
+
+Frontend: HTML, CSS, JavaScript (Vanilla)
+Backend: Flask, Llama-cpp-python
 
 # Features
 

@@ -12,8 +12,8 @@ function initJourney(container) {
   const scrollable = container.querySelector('.journey-container');
   scrollable.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const steps = container.querySelectorAll('.journey-step');
-  const svg = document.querySelector('.connector');
+  const steps = container.querySelectorAll('.journey-step-card');
+  const svg = document.querySelector('.step-connector');
 
   function updateConnectors() {
     if (!svg) return;
@@ -86,7 +86,7 @@ function initJourney(container) {
 
   function runJourneyDemo() {
     if (journeyDemoRunning) return;
-    const step = container.querySelector('.journey-step');
+    const step = container.querySelector('.journey-step-card');
     if (!step) return;
 
     journeyDemoRunning = true;
@@ -184,10 +184,10 @@ function initInterests(container) {
   const scrollable = container.querySelector('.interests-container');
   scrollable.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const track = container.querySelector('.carousel-track');
+  const track = container.querySelector('.interests-container-carousel-track');
   const leftArrow = container.querySelector('.arrow-left');
   const rightArrow = container.querySelector('.arrow-right');
-  const dotsContainer = container.querySelector('.carousel-dots');
+  const dotsContainer = container.querySelector('.interests-container-carousel-dots');
 
   if (!track || !leftArrow || !rightArrow || !dotsContainer) return;
 
@@ -201,7 +201,7 @@ function initInterests(container) {
   }
   track.innerHTML = container._originalTrackHTML;
 
-  const originals = Array.from(track.querySelectorAll('.block'));
+  const originals = Array.from(track.querySelectorAll('.interests-container-carousel-card'));
   const total = originals.length;
   if (total === 0) return;
 
@@ -353,10 +353,10 @@ function initInterests(container) {
 // Skills Visuals
 // ==============================
 function initSkills(container) {
-  const stack = container.querySelector(".stack");
+  const stack = container.querySelector(".skills-container");
   const scrollDown = container.querySelector(".scroll-down");
   const scrollUp = container.querySelector(".scroll-up");
-  const panels = container.querySelectorAll(".panel");
+  const panels = container.querySelectorAll(".skills-container-card");
 
   if (!stack || !scrollDown || !scrollUp || panels.length === 0) return;
 
@@ -410,9 +410,9 @@ function initSkills(container) {
 // Tools Visuals
 // ==============================
 function initTools(section) {
-  const scroller = section.querySelector('.scroll-driver');
-  const scrollSpace = scroller.querySelector('.scroll-space');
-  const cards = Array.from(section.querySelectorAll('.card'));
+  const scroller = section.querySelector('.tools-container-scroll-driver');
+  const scrollSpace = scroller.querySelector('.tools-container-scroll-space');
+  const cards = Array.from(section.querySelectorAll('.tools-container-card'));
   const totalCards = cards.length;
 
   const arrowDown = section.querySelector('.scroll-down');

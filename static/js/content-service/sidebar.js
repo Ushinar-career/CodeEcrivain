@@ -2,9 +2,9 @@
 // Sidebar Setup Logic
 // ==============================
 function initializeSidebar(sectionElement) {
-  const sidebar = sectionElement.querySelector(".section-sidebar");
-  const sectionMain = sectionElement.querySelector(".section-main");
-  const contentBlocks = sectionMain.querySelectorAll(".section-content");
+  const sidebar = sectionElement.querySelector(".main-section-sidebar");
+  const sectionMain = sectionElement.querySelector(".main-section-container");
+  const contentBlocks = sectionMain.querySelectorAll(".main-section-container-content");
   const sidebarItems = sidebar.querySelectorAll(".sidebar-item");
   let collapseTimeout;
 
@@ -63,7 +63,7 @@ function activateContentBlock(topic, sectionMain, contentBlocks) {
     block.classList.remove("active");
   });
 
-  const activeBlock = sectionMain.querySelector(`.section-content[data-content="${topic}"]`);
+  const activeBlock = sectionMain.querySelector(`.main-section-container-content[data-content="${topic}"]`);
 
   if (activeBlock) {
     activeBlock.classList.remove("hidden");

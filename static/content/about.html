@@ -1,7 +1,7 @@
 <!-- Container for sidebar and main content layout -->
-<div class="section-layout">
+<div class="main-section-layout">
   <!-- Sidebar Section for About -->
-  <nav class="section-sidebar">
+  <nav class="main-section-sidebar">
         <div class="sidebar-item" data-topic="journey">
       <span class="material-icons sidebar-icon" title="Journey">travel_explore</span>
       <span class="sidebar-label" title="My Journey">Journey</span>
@@ -20,55 +20,54 @@
     </div>
   </nav>
 
-  <!-- Main Content Section -->
-  <main class="section-main">
+  <!-- About Content Section -->
+  <main class="main-section-container">
 
-    <!-- Journey Section -->
-    <section class="section-content" data-content="journey">
+    <section class="main-section-container-content" data-content="journey">
       <header>
-        <h1 class="section-title">My Journey</h1><br>
+        <h1 class="global-title">My Journey</h1><br>
       </header>
       <div class="journey-container">
-        <div class="steps-wrapper">
-          <svg class="connector"></svg>
-          <article class="journey-step">
-            <h2 class="section-text-md"><strong>Lead Technical Writer</strong></h2>
-            <p class="section-text-base"><strong>Domain: </strong>Medical Devices & Software<br><strong>Since: </strong>2024</p>
+        <div class="journey-container-steps-wrapper">
+          <svg class="step-connector"></svg>
+          <article class="journey-step-card">
+            <h2 class="global-text-md"><strong style="animation: colorswap var(--animation-fast) infinite alternate ease-in-out;">Lead Technical Writer</strong></h2>
+            <p class="global-text-base"><strong>Domain: </strong>Medical Devices & Software<br><strong>Since: </strong>2024</p>
           </article>
 
-          <article class="journey-step">
-            <h2 class="section-text-md"><strong>Specialist Technical Writer</strong></h2>
-            <p class="section-text-base"><strong>Domain: </strong>Medical Devices & Software <br><strong>Duration: </strong>2019–2024</p>
+          <article class="journey-step-card">
+            <h2 class="global-text-md"><strong style="animation: colorswap var(--animation-fast) infinite alternate ease-in-out;">Specialist Technical Writer</strong></h2>
+            <p class="global-text-base"><strong>Domain: </strong>Medical Devices & Software <br><strong>Duration: </strong>2019–2024</p>
           </article>
 
-          <article class="journey-step">
-            <h2 class="section-text-md"><strong>Consultant Technical Writer</strong></h2>
-            <p class="section-text-base"><strong>Domain: </strong>Online Technical Education <br><strong>Duration: </strong>2016–2019</p>
+          <article class="journey-step-card">
+            <h2 class="global-text-md"><strong style="animation: colorswap var(--animation-fast) infinite alternate ease-in-out;">Consultant Technical Writer</strong></h2>
+            <p class="global-text-base"><strong>Domain: </strong>Online Technical Education <br><strong>Duration: </strong>2016–2019</p>
           </article>
 
-          <article class="journey-step">
-            <h2 class="section-text-md"><strong>B.Tech in AEIE</strong></h2>
-            <p class="section-text-base"><strong>Graduated: </strong>2015</p>
+          <article class="journey-step-card">
+            <h2 class="global-text-md"><strong style="animation: colorswap var(--animation-fast) infinite alternate ease-in-out;">B.Tech in AEIE</strong></h2>
+            <p class="global-text-base"><strong>Graduated: </strong>2015</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- Interests Section -->
-    <section class="section-content hidden" data-content="interests">
+    <section class="main-section-container-content hidden" data-content="interests">
       <header>
-        <h1 class="section-title">My Interests</h1>
+        <h1 class="global-title">My Interests</h1>
       </header>
       <button class="material-icons arrow-left">chevron_left</button>
       <button class="material-icons arrow-right">chevron_right</button>
-      <div class="carousel-dots"></div>
+      <div class="interests-container-carousel-dots"></div>
       <div class="interests-container">
-        <div class="carousel-track">
+        <div class="interests-container-carousel-track">
 
-          <article class="block">
-            <div class="block-text">
-              <h2 class="section-text-md"><strong>Technical Writing</strong></h2>
-              <p class="section-text-base">
+          <article class="interests-container-carousel-card">
+            <div class="interests-container-carousel-card-text">
+              <h2 class="global-text-md"><strong>Technical Writing</strong></h2>
+              <p class="global-text-base">
                 <span class="quote-text"><em>"Words are the architecture of understanding &mdash; build them wisely."</em></span><br>
                 My gateway into the software industry, and the foundation of my expertise.<br>
                 Documentation taught me project methodologies, product evolution, and the power of clarity.<br>
@@ -77,10 +76,10 @@
             </div>
           </article>
 
-          <article class="block">
-            <div class="block-text">
-              <h2 class="section-text-md"><strong>Communication</strong></h2>
-              <p class="section-text-base">
+          <article class="interests-container-carousel-card">
+            <div class="interests-container-carousel-card-text">
+              <h2 class="global-text-md"><strong>Communication</strong></h2>
+              <p class="global-text-base">
                 <span class="quote-text"><em>"The future belongs to those who can communicate fluently with machines."</em></span><br>
                 I translate complex concepts into accessible content for developers, designers, and stakeholders.<br>
                 Using prompt engineering, I craft precise prompts and refine AI outputs.<br>
@@ -89,10 +88,10 @@
             </div>
           </article>
 
-          <article class="block">
-            <div class="block-text">
-              <h2 class="section-text-md"><strong>Process Automation</strong></h2>
-              <p class="section-text-base">
+          <article class="interests-container-carousel-card">
+            <div class="interests-container-carousel-card-text">
+              <h2 class="global-text-md"><strong>Process Automation</strong></h2>
+              <p class="global-text-base">
                 <span class="quote-text"><em>"Repetition is a signal &mdash; automation is the answer."</em></span><br>
                 I design Power Automate Desktop Flows to eliminate repetitive tasks.<br>
                 Automation reclaims time for creative and strategic work, turning routine into momentum.<br>
@@ -100,10 +99,10 @@
             </div>
           </article>
 
-          <article class="block">
-            <div class="block-text">
-              <h2 class="section-text-md"><strong>AI Workflows</strong></h2>
-              <p class="section-text-base">
+          <article class="interests-container-carousel-card">
+            <div class="interests-container-carousel-card-text">
+              <h2 class="global-text-md"><strong>AI Workflows</strong></h2>
+              <p class="global-text-base">
                 <span class="quote-text"><em>"In the age of intelligence, workflows aren’t built &mdash; they’re conversed into existence."</em></span><br>
                 From ChatGPT to local models, I experiment with agent-based systems.<br>
                 Precision in language drives workflow design, blending automation with contextual memory.<br>
@@ -112,10 +111,10 @@
             </div>
           </article>
 
-          <article class="block">
-            <div class="block-text">
-              <h2 class="section-text-md"><strong>Research</strong></h2>
-              <p class="section-text-base">
+          <article class="interests-container-carousel-card">
+            <div class="interests-container-carousel-card-text">
+              <h2 class="global-text-md"><strong>Research</strong></h2>
+              <p class="global-text-base">
                 <span class="quote-text"><em>"Curiosity is no longer a spark &mdash; it’s a system."</em></span><br>
                 Research anchors my work, guiding projects built with user-centric design.<br>
                 For me, discovery means building systems that make knowledge actionable.<br>
@@ -123,10 +122,10 @@
             </div>
           </article>
 
-          <article class="block">
-            <div class="block-text">
-              <h2 class="section-text-md"><strong>Web Development</strong></h2>
-              <p class="section-text-base">
+          <article class="interests-container-carousel-card">
+            <div class="interests-container-carousel-card-text">
+              <h2 class="global-text-md"><strong>Web Development</strong></h2>
+              <p class="global-text-base">
                 <span class="quote-text"><em>"Every line of code is a decision &mdash; every interface, a conversation."</em></span><br>
                 Web development extends my research into interactive experiences.<br>
                 I believe the future lies in adaptive systems where AI augments both build and user experience.<br>
@@ -139,16 +138,16 @@
     </section>
 
     <!-- Skills Section -->
-    <section class="section-content hidden" data-content="skills">
+    <section class="main-section-container-content hidden" data-content="skills">
       <header>
-        <h1 class="section-title">My Skills</h1>
+        <h1 class="global-title">My Skills</h1>
       </header>
 
-      <div class="stack">
+      <div class="skills-container">
 
-        <article class="panel">
-          <h2 class="section-text-md">Technical Documentation</h2>
-          <div class="section-text-base">
+        <article class="skills-container-card">
+          <h2 class="global-text-md">Technical Documentation</h2>
+          <div class="global-text-base">
             <p>Creating precise, user-centric, and developer-ready documentation aligned with industry standards and best practices.</p><br>
             <strong>Key Capabilities</strong>
             <p>Customer-facing documentation: user guides, installation manuals, API references, support materials, communication documents</p>
@@ -157,9 +156,9 @@
           </div>
         </article>
 
-        <article class="panel">
-          <h2 class="section-text-md">Document Management</h2>
-          <div class="section-text-base">
+        <article class="skills-container-card">
+          <h2 class="global-text-md">Document Management</h2>
+          <div class="global-text-base">
             <p>Ensuring traceable, compliant, and production-ready documentation through standardized tooling and governance.</p><br>
             <strong>Key Capabilities</strong>
             <p>Controlling and maintaining version updates across project documentation</p>
@@ -168,9 +167,9 @@
           </div>
         </article>
 
-        <article class="panel">
-          <h2 class="section-text-md">Professional Communication</h2>
-          <div class="section-text-base">
+        <article class="skills-container-card">
+          <h2 class="global-text-md">Professional Communication</h2>
+          <div class="global-text-base">
             <p>Driving structured collaboration and transparent delivery across teams and sprints.</p><br>
             <strong>Key Capabilities</strong>
             <p>Managing communication via email, messaging, demos, and approvals</p>
@@ -180,9 +179,9 @@
           </div>
         </article>
 
-        <article class="panel">
-          <h2 class="section-text-md">Mentoring</h2>
-          <div class="section-text-base">
+        <article class="skills-container-card">
+          <h2 class="global-text-md">Mentoring</h2>
+          <div class="global-text-base">
             <p>Fostering individual growth, team resilience, and a culture of continuous learning through active guidance and support.</p><br>
             <strong>Key Capabilities</strong>
             <p>Conducting knowledge-sharing sessions, onboarding walkthroughs, and peer learning forums</p>
@@ -191,9 +190,9 @@
           </div>
         </article>
 
-        <article class="panel">
-          <h2 class="section-text-md">Automation</h2>
-          <div class="section-text-base">
+        <article class="skills-container-card">
+          <h2 class="global-text-md">Automation</h2>
+          <div class="global-text-base">
             <p>Enhancing efficiency and consistency by automating repetitive tasks and streamlining documentation workflows.</p><br>
             <strong>Key Capabilities</strong>
             <p>Automating document lifecycle tasks across enterprise systems</p>
@@ -203,9 +202,9 @@
           </div>
         </article>
 
-        <article class="panel">
-          <h2 class="section-text-md">Prompt Engineering</h2>
-          <div class="section-text-base">
+        <article class="skills-container-card">
+          <h2 class="global-text-md">Prompt Engineering</h2>
+          <div class="global-text-base">
             <p>Designing effective prompts for AI agents to perform targeted tasks.</p><br>
             <strong>Key Capabilities</strong>
             <p>Exploring role-based prompt design to deepen understanding of AI behavior</p>
@@ -221,28 +220,28 @@
     </section>
 
     <!-- Tools Section -->
-    <section class="section-content hidden" data-content="tools">
+    <section class="main-section-container-content hidden" data-content="tools">
       <header>
-        <h1 class="section-title">My Tools</h1>
+        <h1 class="global-title">My Tools</h1>
       </header>
       <div class="tools-container">
-        <div class="scroll-driver">
-          <div class="scroll-space"></div>
+        <div class="tools-container-scroll-driver">
+          <div class="tools-container-scroll-space"></div>
         </div>
 
-        <div class="cards-layer">
-          <section class="card">
-            <h2 class="section-text-md">Technical Documentation</h2>
-            <div class="section-text-base">
+        <div class="tools-container-cards-wrapper">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Technical Documentation</h2>
+            <div class="global-text-base">
               <p><strong>MadCap Flare (xml, html, chm, pdf)</strong> — Multi‑format publishing</p><br>
               <p><strong>Adobe FrameMaker (pdf)</strong> — Structured authoring</p><br>
               <p><strong>Adobe Acrobat</strong> — PDF editing and review workflows</p><br>
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Document Management</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Document Management</h2>
+            <div class="global-text-base">
               <p><strong>M365 Copilot (OneDrive, Word, Excel, etc.)</strong> — AI‑powered document collaboration</p><br>
               <p><strong>SAP Software Solutions</strong> — Enterprise release process management</p><br>
               <p><strong>Perforce</strong> — Version control system for documentation</p><br>
@@ -250,47 +249,47 @@
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Professional Communication</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Professional Communication</h2>
+            <div class="global-text-base">
               <p><strong>Microsoft Azure DevOps</strong> — Internal communication with development pipelines</p><br>
               <p><strong>M365 Enterprise (Outlook, Teams, etc.)</strong> — Enterprise messaging and collaboration suite</p><br>
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Mentoring</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Mentoring</h2>
+            <div class="global-text-base">
               <p><strong>SAP SuccessFactors</strong> — Talent development and career planning</p><br>
               <p><strong>Skillsoft Percipio</strong> — Online learning and skill growth platform</p><br>
               <p><strong>Internal documents and courses</strong> — Organization‑specific mentoring resources</p><br>
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Automation</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Automation</h2>
+            <div class="global-text-base">
               <p><strong>Microsoft Power Automate</strong> — Workflow automation across apps and services</p><br>
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Prompt Engineering</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Prompt Engineering</h2>
+            <div class="global-text-base">
               <p><strong>Microsoft VS Code</strong> — IDE for building and testing prompts in python and POML</p><br>
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Secondary Tools</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Secondary Tools</h2>
+            <div class="global-text-base">
               <p><strong>Github Copilot, Cursor, ChatGPT, Gemini, Ollama, Google Workspace (Gmail, Docs, Gemini, etc.), Figma, Microsoft Clipchamp, Adobe Illustrator, Jira, Audacity</strong>
             </div>
           </section>
 
-          <section class="card">
-            <h2 class="section-text-md">Languages</h2>
-            <div class="section-text-base">
+          <section class="tools-container-card">
+            <h2 class="global-text-md">Languages</h2>
+            <div class="global-text-base">
               <p><strong>XML, HTML, CSS, Vanilla JS, Python, Markdown, POML</strong>
             </div>
           </section>

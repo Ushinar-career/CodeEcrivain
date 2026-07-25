@@ -5,113 +5,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Help</title>
-  <link rel="icon" href="assets/images/earth_logo_hq.png">
+  <link rel="icon" href="static/assets/images/earth_logo_hq.png">
   <link rel="stylesheet" href="static/css/help.css" />
-  <!-- Microsoft clarity -->
-  <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "v2f1pvbju0");
-  </script>
+  <!-- <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "v2f1pvbju0");
+  </script> -->
 </head>
 
 <body>
-  <!-- Global Loader -->
   <div class="global-loader">
-    <div class="spinner"></div>
+    <div class="global-loader-spinner"></div>
   </div>
 
-  <!-- App Container -->
-  <div class="app-container hidden">
-    <header class="header-bar">
-      <img src="assets/images/earth_logo_hq.png" alt="Earth Logo" class="logo" />
+  <div class="code-ecrivain-help hidden">
+    <header class="help-header">
+      <img class="help-header-logo" src="static/assets/images/earth_logo_hq.png" alt="Earth Logo" />
       <h1>Help Center</h1>
     </header>
-
-    <main class="main-layout">
-      <nav class="sidebar" aria-label="Help topics">
-        <div class="sidebar-top">
-          <span class="sidebar-title">TOPICS</span>
-          <button class="sidebar-toggle" aria-label="Toggle topics">☰</button>
+    <main class="help-main-layout">
+      <nav class="help-sidebar" aria-label="Help topics">
+        <div class="help-sidebar-header">
+          <span class="help-sidebar-title">Help Topics</span>
+          <button class="help-sidebar-toggle" aria-label="Expand or collapse help topics">☰</button>
         </div>
-        <div class="sidebar-links"></div>
+        <div class="help-sidebar-links"></div>
       </nav>
-
-      <section class="content"></section>
+      <section class="help-content"></section>
     </main>
+    <footer class="help-footer">
+      ©2025. All rights reserved.
+    </footer>
   </div>
-<script src="static/js/marked.min.js"></script>
-<script>
-  // Loader helpers
-  function showLoader() {
-    document.querySelector('.global-loader').classList.remove('hidden');
-    document.querySelector('.app-container').classList.add('hidden');
-  }
-  function hideLoader() {
-    document.querySelector('.global-loader').classList.add('hidden');
-    document.querySelector('.app-container').classList.remove('hidden');
-  }
 
-  // Load markdown into content + build sidebar
-  async function loadMarkdown() {
-    const content = document.querySelector(".content");
-    try {
-      const res = await fetch("ReadMe.md");
-      if (!res.ok) throw new Error(res.statusText);
-      const text = await res.text();
-      content.innerHTML = marked.parse(text);
-
-      // Build sidebar links
-      const headings = content.querySelectorAll("h1,h2,h3,h4,h5,h6");
-      const links = document.querySelector(".sidebar-links");
-      links.innerHTML = "";
-      headings.forEach((h, i) => {
-        if (!h.id) h.id = `heading-${i}`;
-        const a = document.createElement("a");
-        a.textContent = h.textContent;
-        a.className = `topic-link level-${h.tagName.substring(1)}`;
-        a.href = `#${h.id}`;
-        links.appendChild(a);
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (err) {
-      console.error("Failed to load markdown:", err);
-      content.textContent = "Error loading help content.";
-    }
-  }
-
-  // Sidebar toggle
-  function initSidebarToggle() {
-    const btn = document.querySelector(".sidebar-toggle");
-    const sidebar = document.querySelector(".sidebar");
-    const layout = document.querySelector(".main-layout");
-    const apply = () =>
-      layout.style.setProperty(
-        '--sidebar-current-width',
-        sidebar.classList.contains("collapsed") ? '3rem' : '13rem'
-      );
-    btn.onclick = () => { sidebar.classList.toggle("collapsed"); apply(); };
-    apply();
-  }
-
-window.addEventListener("DOMContentLoaded", async () => {
-  // Loader is already visible by default
-  await loadMarkdown();
-  initSidebarToggle();
-
-  const logo = document.querySelector(".logo");
-  if (logo.complete) {
-    // Logo already cached/loaded
-    hideLoader();
-  } else {
-    logo.addEventListener("load", hideLoader);
-    logo.addEventListener("error", hideLoader); // fallback
-  }
-});
-
-</script>
-
+  <script src="static/js/ribbon-service/help.js"></script>
 </body>
 </html>

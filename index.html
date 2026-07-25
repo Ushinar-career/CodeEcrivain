@@ -1,12 +1,16 @@
 <!-- Verification Landing Page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Enter Access Code</title>
-  <link rel="icon" type="image/png" href="assets/images/earth_logo_hq.png">
-  <link rel="stylesheet" href="static/css/spa.css" />
+  <title>
+    Enter Access Code
+  </title>
+  <link rel="icon" type="image/png" href="static/assets/images/earth_logo_hq.png">
+  <link rel="stylesheet" href="static/css/global.css" />  
+  
   <!-- Microsoft clarity -->
   <script type="text/javascript">
       (function(c,l,a,r,i,t,y){
@@ -15,11 +19,10 @@
           y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window, document, "clarity", "script", "v2f1pvbju0");
   </script>
+  
   <style>
     * {
       box-sizing: border-box;
-      border-radius: 0.5rem;
-      color: #5dade2;
       font-family: 'Gill Sans', 'Segoe UI', sans-serif;
       margin: 1rem;
       padding: 1rem;
@@ -27,12 +30,18 @@
     }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(2rem); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     body {
-      background-color: black;
       display: flex;
       flex-direction: column;
       text-align: center;
@@ -49,9 +58,10 @@
       width: 3rem;
       height: 3rem;
       text-align: center;
-      border: 0.1rem solid #5dade2;
-      background-color: black;
-      color: #5dade2;
+      border: var(--border);
+      border-radius: var(--radius-rounded);
+      background-color: var(--background-color);
+      color: var(--primary-color);
     }
 
     .error-popup {
@@ -59,15 +69,16 @@
       position: absolute;
       align-self: center;
       padding: 3rem;
-      background-color: black;
+      background-color: var(--background-color);
       color: red;
-      border-radius: 0.5rem;
-      border: 0.1rem solid #5dade2;
+      border: var(--border);
+      border-radius: var(--radius-rounded);
       opacity: 0;
       animation: fadeInUp 0.5s ease forwards;
     }
   </style>
 </head>
+
 <body>
   <h1>Enter Access Code</h1>
   <div class="otp-container">
@@ -78,7 +89,14 @@
     <input type="password" maxlength="1" class="otp-input" />
     <input type="password" maxlength="1" class="otp-input" />
   </div>
-  <p>Connect with me at: <a style="color: var(--hover-color); cursor: pointer; margin-left: -1rem;" href="mailto:ushinar.career@outlook.com" title="Send Email">ushinar.career@outlook.com</a></p>
+  <p>Connect with me at: <a style="margin: -1rem;" href="mailto:ushinar.career@outlook.com"
+      title="Send Email">ushinar.career@outlook.com</a></p>
+  <p class="global-subtext">
+    CodeÉcrivain uses Microsoft Clarity to analyze user behavior and improve our services.
+    Clarity collects usage data such as clicks, scrolls, and navigation patterns.
+    You can learn more about how Microsoft handles this data in the <a style="margin: -1rem;"
+      href="https://clarity.microsoft.com/privacy">Microsoft Clarity Privacy Policy</a>
+  </p>
   <div class="error-popup">❌ Invalid code!</div>
 
   <script>
@@ -108,7 +126,7 @@
 
       if (enteredCode.length === inputs.length) {
         if (enteredCode === validCode) {
-          window.location.href = "spa.html";
+          window.location.href = "code-ecrivain.html";
         } else {
           showErrorPopup();
         }
@@ -140,4 +158,5 @@
     });
   </script>
 </body>
+
 </html>
